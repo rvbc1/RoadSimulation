@@ -10,6 +10,8 @@ class Map {
    public:
     Map(QSize size);
 
+    void print();
+
    protected:
    private:
     QSize size;

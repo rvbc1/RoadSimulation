@@ -5,27 +5,16 @@
 
 #include <iostream>
 
-#include "ArduinoJson-v6.18.0.h"
+
 #include <fstream>
 
 #include "SimulationManager.h"
 
-#define JSON_DOCUMENT_SIZE 10000
 
 int main(int argc, char *argv[]) {
     // std::string filepath = "mapa.json";
 
-    // StaticJsonDocument<JSON_DOCUMENT_SIZE> doc;
-    // std::ifstream interfaceJsonFile(filepath);
-
-    // DeserializationError error = deserializeJson(doc, interfaceJsonFile);
-    // if (error) {
-    //     std::cout << filepath;
-    //     std::cout << " Json deserialize failed: ";
-    //     std::cout << error << std::endl;
-    // } else {
-    //     //return loadMenuItem(doc.as<JsonVariant>());
-    // }
+    
     // // QVector<QVector<int> > array[3][3];
     // QVector<int> integerVector;
     // //integerVector.push_back(7);

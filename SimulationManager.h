@@ -2,6 +2,7 @@
 #define SimulationManager_h
 
 #include "Map.h"
+#include "MapBuilder.h"
 
 class SimulationManager {
    public:
