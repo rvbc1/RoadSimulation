@@ -8,8 +8,6 @@
 
 #define JSON_DOCUMENT_SIZE 10000
 
-#define MAP_WIDTH_JSON_KEY "width"
-#define MAP_HEIGHT_JSON_KEY "height"
 
 class MapBuilder {
    public:

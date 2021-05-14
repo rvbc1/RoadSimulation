@@ -1,4 +1,14 @@
 {
-    "width": 4,
-    "height": 5
+    "size": {
+        "width": 7,
+        "height": 5
+    },
+    "objects": [
+        {
+            "coordinates": {
+                "x": 0,
+                "y": 3
+            }
+        }
+    ]
 }

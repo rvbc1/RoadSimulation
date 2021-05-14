@@ -2,5 +2,7 @@
 
 SimulationManager::SimulationManager() {
     map = MapBuilder::loadMapFromFile("Mapa.json");
-    map->print();
+    if (map != nullptr) {
+        map->print();
+    }
 }

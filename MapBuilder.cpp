@@ -8,11 +8,7 @@ Map* MapBuilder::loadMapFromFile(std::string filepath) {
 
     DeserializationError error = deserializeJson(doc, interfaceJsonFile);
     if (error) {
-        std::cout << filepath;
-        std::cout << " Json deserialize failed: ";
-        std::cout << error << std::endl;
-        // return nullptr;
-        return new Map(QSize(4, 3));
+        throw std::runtime_error("Json deserialize failed");
     } else {
         return loadMap(doc.as<JsonVariant>());
     }
@@ -21,11 +17,5 @@ Map* MapBuilder::loadMapFromFile(std::string filepath) {
 }
 
 Map* MapBuilder::loadMap(JsonObject jsonObject) {
-    if ((jsonObject.containsKey(MAP_WIDTH_JSON_KEY)) && (jsonObject[MAP_WIDTH_JSON_KEY].is<uint32_t>()) && (jsonObject.containsKey(MAP_HEIGHT_JSON_KEY)) && (jsonObject[MAP_HEIGHT_JSON_KEY].is<uint32_t>())) {
-        QSize mapSize;
-        mapSize.setWidth(jsonObject[MAP_WIDTH_JSON_KEY].as<uint32_t>());
-        mapSize.setHeight(jsonObject[MAP_HEIGHT_JSON_KEY].as<uint32_t>());
-        return new Map(mapSize);
-    }
-    return nullptr;
+    return new Map(jsonObject);
 }
