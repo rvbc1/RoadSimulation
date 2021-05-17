@@ -51,6 +51,15 @@ void Map::addObject(MapObject *object) {
     }
 }
 
+void Map::removeObject(MapObject *object){
+    if (object != nullptr) {
+        QPoint coords = object->getCoordinates();
+        if ((coords.x() < size.width()) && (coords.y() < size.height())) {
+            objectsArray[coords.x()][coords.y()].removeOne(object);
+        }
+    }
+}
+
 MapObject *Map::getMapObject(QPoint coords, MapObject::Type type) {
     QVector<MapObject *> areaMapObjectsVector = getMapObjectVector(coords);
     for (int i = 0; i < areaMapObjectsVector.size(); i++) {

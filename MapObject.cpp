@@ -63,6 +63,12 @@ Map*  MapObject::getMap(){
     return map;
 }
 
+void MapObject::setCoordinates(QPoint coordinates){
+    this->map->removeObject(this);
+    this->coordinates = coordinates;
+    this->map->addObject(this);
+}
+
 QPoint MapObject::getCoordinates() {
     return coordinates;
 }

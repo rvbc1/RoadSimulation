@@ -44,16 +44,18 @@ Driver::Driver(JsonObject jsonObject, Map* map) {
     map->addObject(vehicle);
 }
 
-void Driver::searchPath() {
+QVector<Road*> Driver::searchPath() {
     QVector<QVector<Road*>> paths = search(startCoordinates, destinationCoordinates);
 
     std::cout << "Available paths:" << std::endl;
     for (QVector<Road*> path : paths) {
-        for (Road* roads : path) {
-            std::cout << roads->getCoordinates().x() << ", " << roads->getCoordinates().y() << " -> ";
+        for (Road* road : path) {
+            std::cout << road->getCoordinates().x() << ", " << road->getCoordinates().y() << " -> ";
         }
         std::cout << std::endl;
     }
+
+    return paths[2];
     // } else {
     //     throw std::runtime_error("Driver not on the road");
     // }

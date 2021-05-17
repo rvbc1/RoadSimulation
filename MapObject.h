@@ -28,7 +28,10 @@ class MapObject {
 
     void setMap(Map* map);
     Map* getMap();
+
+    void setCoordinates(QPoint coordinates);
     QPoint getCoordinates();
+    
 
     virtual std::string getChar();
 

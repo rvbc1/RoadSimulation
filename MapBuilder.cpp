@@ -39,7 +39,8 @@ Map* MapBuilder::loadMap(JsonObject jsonObject) {
         }
     }
     if(driver != nullptr){
-        driver->searchPath();
+        //driver->searchPath();
+        map->driver = driver;
     }
     return map;
 }

@@ -12,12 +12,15 @@
 #define MAP_WIDTH_JSON_KEY "width"
 #define MAP_HEIGHT_JSON_KEY "height"
 
+class Driver;
+
 class Map {
    public:
     Map(QSize size);
     Map(JsonObject jsonObject);
 
     void addObject(MapObject *object);
+    void removeObject(MapObject *object);
 
     void print();
 
@@ -25,6 +28,8 @@ class Map {
     QVector<MapObject*> getMapObjectVector(QPoint coords);
 
     bool coordsInMapSize(QPoint coords);
+
+    Driver *driver;
 
    protected:
    private:
