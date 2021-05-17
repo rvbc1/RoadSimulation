@@ -18,13 +18,6 @@ Map::Map(JsonObject jsonObject) {
         } else {
             throw std::invalid_argument("Wrong map size values");
         }
-
-        if ((jsonObject.containsKey("objects")) && (jsonObject["objects"].is<JsonArray>())) {
-            JsonArray objectsArray = jsonObject["objects"].as<JsonArray>();
-            for (JsonVariant v : objectsArray) {
-                addObject(new MapObject(v.as<JsonObject>()));
-            }
-        }
     } else {
         throw std::invalid_argument("Map size not declared");
     }
@@ -40,23 +33,37 @@ void Map::createObjectsArray() {
     }
 }
 
+bool Map::coordsInMapSize(QPoint coords) {
+    if ((coords.x() >= 0) && (coords.x() < size.width()) && (coords.y() >= 0) && (coords.y() < size.height())) {
+        return true;
+    }
+    return false;
+}
+
 void Map::addObject(MapObject *object) {
     if (object != nullptr) {
         QPoint coords = object->getCoordinates();
         if ((coords.x() < size.width()) && (coords.y() < size.height())) {
             objectsArray[coords.x()][coords.y()] = object;
+            object->setMap(this);
         }
     }
+}
+
+MapObject *Map::getMapObject(QPoint coords) {
+    if (coordsInMapSize(coords)) {
+        return objectsArray[coords.x()][coords.y()];
+    }
+    return nullptr;
 }
 
 void Map::print() {
     for (int h = 0; h < size.height(); h++) {
         for (int w = 0; w < size.width(); w++) {
-            if (objectsArray[w][h] == nullptr) {
-                std::cout << " ";
+            if (getMapObject(QPoint(w, h)) != nullptr) {
+                std::cout << getMapObject(QPoint(w, h))->getChar();
             } else {
-               // std::cout << "╬";
-               std::cout << objectsArray[w][h]->getChar();
+                std::cout << " ";
             }
         }
         std::cout << std::endl;

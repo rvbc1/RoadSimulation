@@ -1,14 +1,57 @@
 {
     "size": {
-        "width": 7,
+        "width": 17,
         "height": 5
     },
     "objects": [
         {
             "coordinates": {
                 "x": 0,
+                "y": 2
+            },
+            "type": "road"
+        },
+        {
+            "coordinates": {
+                "x": 0,
                 "y": 3
-            }
+            },
+            "type": "road"
+        },
+        {
+            "coordinates": {
+                "x": 1,
+                "y": 3
+            },
+            "type": "road"
+        },
+        {
+            "coordinates": {
+                "x": 2,
+                "y": 3
+            },
+            "type": "road"
+        },
+        {
+            "coordinates": {
+                "x": 3,
+                "y": 4
+            },
+            "type": "road"
+        },
+        {
+            "coordinates": {
+                "x": 3,
+                "y": 3
+            },
+            "type": "road"
+        },
+        {
+            "coordinates": {
+                "x": 3,
+                "y": 2
+            },
+            "type": "road"
         }
     ]
 }
