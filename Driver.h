@@ -16,7 +16,7 @@ class Driver {
 
     void searchPath();
 
-    QVector<Road*> search(QPoint startPoint, QPoint endPoint, QVector<Road*> path = QVector<Road*>());
+    QVector<QVector<Road*>> search(QPoint startPoint, QPoint endPoint, QVector<Road*> path = QVector<Road*>(), QVector<QVector<Road*>> foundedPaths = QVector<QVector<Road*>>());
 
    protected:
    private:

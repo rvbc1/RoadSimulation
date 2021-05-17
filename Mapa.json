@@ -88,6 +88,34 @@
         },
         {
             "coordinates": {
+                "x": 4,
+                "y": 1
+            },
+            "type": "road"
+        },
+        {
+            "coordinates": {
+                "x": 5,
+                "y": 1
+            },
+            "type": "road"
+        },
+        {
+            "coordinates": {
+                "x": 5,
+                "y": 2
+            },
+            "type": "road"
+        },
+        {
+            "coordinates": {
+                "x": 5,
+                "y": 3
+            },
+            "type": "road"
+        },
+        {
+            "coordinates": {
                 "x": 3,
                 "y": 3
             },
