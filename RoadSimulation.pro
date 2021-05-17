@@ -18,4 +18,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 # Input
-SOURCES += main.cpp SimulationManager.cpp Map.cpp MapBuilder.cpp MapObject.cpp Road.cpp Vehicle.cpp Driver.cpp
+SOURCES += \
+    main.cpp \
+    SimulationManager.cpp \
+    Map.cpp MapBuilder.cpp \
+    MapObject.cpp \
+    Road.cpp \
+    Vehicle.cpp \
+    Driver.cpp
+
+HEADERS += \
+    Driver.h \
+    Map.h \
+    MapBuilder.h \
+    MapObject.h \
+    Road.h \
+    SimulationManager.h \
+    Vehicle.h

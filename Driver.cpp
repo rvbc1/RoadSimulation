@@ -46,12 +46,41 @@ Driver::Driver(JsonObject jsonObject, Map* map) {
 
 void Driver::searchPath() {
     if (Road* road = dynamic_cast<Road*>(map->getMapObject(startCoordinates, MapObject::ROAD))) {
-        QVector<Road*> avilableRoads = road->getAvailableRoads();
-         std::cout << road->getCoordinates().x() << ", " << road->getCoordinates().y() << std::endl;
-        for (Road* avilableRoad : avilableRoads) {
-            std::cout << avilableRoad->getCoordinates().x() << ", " << avilableRoad->getCoordinates().y() << std::endl;
-        }
+        // QVector<Road*> avilableRoads = road->getAvailableRoads();
+
+        // for (Road* avilableRoad : avilableRoads) {
+        //     std::cout << avilableRoad->getCoordinates().x() << ", " << avilableRoad->getCoordinates().y() << std::endl;
+        // }
+        QVector<Road*> path = search(startCoordinates, destinationCoordinates);
+
+        // std::cout << road->getCoordinates().x() << ", " << road->getCoordinates().y();
+        // for (Road* roads : path) {
+        //     std::cout << " -> " << roads->getCoordinates().x() << ", " << roads->getCoordinates().y();
+        // }
     } else {
         throw std::runtime_error("Driver not on the road");
     }
+}
+
+QVector<Road*> Driver::search(QPoint startPoint, QPoint endPoint, QVector<Road*> path) {
+    if (Road* road = dynamic_cast<Road*>(map->getMapObject(startPoint, MapObject::ROAD))) {
+        path.push_back(road);
+        if (startPoint != endPoint) {
+            QVector<Road*> avilableRoads = road->getAvailableRoads();
+            for (Road* avilableRoad : avilableRoads) {
+                if (path.contains(avilableRoad) == false) {
+                    //path.push_back(avilableRoad);
+                    QVector<Road*> foundedPath = search(avilableRoad->getCoordinates(), endPoint, path);
+                }
+            }
+        }else {
+            std::cout << "Jest ";
+        }
+    }
+
+    for (Road* roads : path) {
+        std::cout << roads->getCoordinates().x() << ", " << roads->getCoordinates().y() << " -> ";
+    }
+    std::cout << std::endl;
+    return path;
 }

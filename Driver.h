@@ -13,8 +13,10 @@ class Driver {
    public:
     Driver(QPoint startCoordinates, QPoint destinationCoordinates, Map* map);
     Driver(JsonObject jsonObject, Map* map);
-    
+
     void searchPath();
+
+    QVector<Road*> search(QPoint startPoint, QPoint endPoint, QVector<Road*> path = QVector<Road*>());
 
    protected:
    private:
