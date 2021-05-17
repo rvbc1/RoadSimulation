@@ -16,20 +16,25 @@ class Map;
 class MapObject {
    public:
     enum Direction { UP,
-                      LEFT,
-                      RIGHT,
-                      DOWN };
-    enum Type { ROAD,
+                     LEFT,
+                     RIGHT,
+                     DOWN };
+    enum Type { WHATEVER,
+                ROAD,
+                VEHICLE,
                 NONE };
     MapObject(QPoint coordinates, Map* map = nullptr);
     MapObject(JsonObject jsonObject, Map* map = nullptr);
 
     void setMap(Map* map);
+    Map* getMap();
     QPoint getCoordinates();
 
     virtual std::string getChar();
 
-    MapObject* getNeighborhoodMapObject(Direction direction);
+    MapObject* getNeighborhoodMapObject(Direction direction, Type type = WHATEVER);
+
+    Type getType();
 
    protected:
     Type type = NONE;

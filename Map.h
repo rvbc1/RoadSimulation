@@ -6,6 +6,7 @@
 
 #include "MapObject.h"
 #include "Road.h"
+#include "Vehicle.h"
 
 #define MAP_SIZE_JSON_KEY "size"
 #define MAP_WIDTH_JSON_KEY "width"
@@ -20,14 +21,15 @@ class Map {
 
     void print();
 
-    MapObject* getMapObject(QPoint coords);
+    MapObject* getMapObject(QPoint coords, MapObject::Type type = MapObject::WHATEVER);
+    QVector<MapObject*> getMapObjectVector(QPoint coords);
 
     bool coordsInMapSize(QPoint coords);
 
    protected:
    private:
     QSize size;
-    QVector<QVector<MapObject*>> objectsArray;
+    QVector<QVector<QVector<MapObject*>>> objectsArray;
 
     void createObjectsArray();
 };

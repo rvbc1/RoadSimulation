@@ -57,13 +57,17 @@ SOURCES       = main.cpp \
 		Map.cpp \
 		MapBuilder.cpp \
 		MapObject.cpp \
-		Road.cpp 
+		Road.cpp \
+		Vehicle.cpp \
+		Driver.cpp 
 OBJECTS       = main.o \
 		SimulationManager.o \
 		Map.o \
 		MapBuilder.o \
 		MapObject.o \
-		Road.o
+		Road.o \
+		Vehicle.o \
+		Driver.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -144,7 +148,9 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		Map.cpp \
 		MapBuilder.cpp \
 		MapObject.cpp \
-		Road.cpp
+		Road.cpp \
+		Vehicle.cpp \
+		Driver.cpp
 QMAKE_TARGET  = RoadSimulation
 DESTDIR       = 
 TARGET        = RoadSimulation
@@ -324,7 +330,7 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp SimulationManager.cpp Map.cpp MapBuilder.cpp MapObject.cpp Road.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp SimulationManager.cpp Map.cpp MapBuilder.cpp MapObject.cpp Road.cpp Vehicle.cpp Driver.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -378,6 +384,8 @@ main.o: main.cpp SimulationManager.h \
 		Map.h \
 		MapObject.h \
 		ArduinoJson-v6.18.0.h \
+		Road.h \
+		Vehicle.h \
 		MapBuilder.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
@@ -385,27 +393,50 @@ SimulationManager.o: SimulationManager.cpp SimulationManager.h \
 		Map.h \
 		MapObject.h \
 		ArduinoJson-v6.18.0.h \
+		Road.h \
+		Vehicle.h \
 		MapBuilder.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SimulationManager.o SimulationManager.cpp
 
 Map.o: Map.cpp Map.h \
 		MapObject.h \
-		ArduinoJson-v6.18.0.h
+		ArduinoJson-v6.18.0.h \
+		Road.h \
+		Vehicle.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Map.o Map.cpp
 
 MapBuilder.o: MapBuilder.cpp MapBuilder.h \
 		ArduinoJson-v6.18.0.h \
 		Map.h \
-		MapObject.h
+		MapObject.h \
+		Road.h \
+		Vehicle.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MapBuilder.o MapBuilder.cpp
 
 MapObject.o: MapObject.cpp MapObject.h \
-		ArduinoJson-v6.18.0.h
+		ArduinoJson-v6.18.0.h \
+		Map.h \
+		Road.h \
+		Vehicle.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MapObject.o MapObject.cpp
 
-Road.o: Road.cpp MapObject.h \
+Road.o: Road.cpp Road.h \
+		MapObject.h \
 		ArduinoJson-v6.18.0.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Road.o Road.cpp
+
+Vehicle.o: Vehicle.cpp Vehicle.h \
+		MapObject.h \
+		ArduinoJson-v6.18.0.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Vehicle.o Vehicle.cpp
+
+Driver.o: Driver.cpp Driver.h \
+		Map.h \
+		MapObject.h \
+		ArduinoJson-v6.18.0.h \
+		Road.h \
+		Vehicle.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Driver.o Driver.cpp
 
 ####### Install
 

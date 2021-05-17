@@ -1,6 +1,8 @@
 #ifndef Road_h
 #define Road_h
 
+#include <QVector>
+
 #include "MapObject.h"
 
 #define ROAD_OBJECT_TYPE_JSON_VALUE "road"
@@ -11,6 +13,8 @@ class Road : public MapObject {
     Road(JsonObject jsonObject);
 
     std::string getChar();
+
+    QVector<Road*> getAvailableRoads();
 
    protected:
    private:

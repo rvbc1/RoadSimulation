@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "Driver.h"
+
 Map* MapBuilder::loadMapFromFile(std::string filepath) {
     StaticJsonDocument<JSON_DOCUMENT_SIZE> doc;
     std::ifstream interfaceJsonFile(filepath);
@@ -17,6 +19,7 @@ Map* MapBuilder::loadMapFromFile(std::string filepath) {
 }
 
 Map* MapBuilder::loadMap(JsonObject jsonObject) {
+    Driver* driver = nullptr;
     Map* map = new Map(jsonObject);
     if ((jsonObject.containsKey("objects")) && (jsonObject["objects"].is<JsonArray>())) {
         JsonArray objectsArray = jsonObject["objects"].as<JsonArray>();
@@ -25,12 +28,18 @@ Map* MapBuilder::loadMap(JsonObject jsonObject) {
                 std::string mapObjectType = v[MAP_OBJECT_TYPE_JSON_KEY].as<std::string>();
                 if (mapObjectType == ROAD_OBJECT_TYPE_JSON_VALUE) {
                     map->addObject(new Road(v.as<JsonObject>()));
+                } else if (mapObjectType == VEHICLE_OBJECT_TYPE_JSON_VALUE) {
+                    //map->addObject(new Vehicle(v.as<JsonObject>()));
+                    driver = new Driver(v.as<JsonObject>(), map);
                 }
 
             } else {
                 map->addObject(new MapObject(v.as<JsonObject>(), map));
             }
         }
+    }
+    if(driver != nullptr){
+        driver->searchPath();
     }
     return map;
 }

@@ -25,9 +25,10 @@ Map::Map(JsonObject jsonObject) {
 
 void Map::createObjectsArray() {
     for (int w = 0; w < size.width(); w++) {
-        QVector<MapObject *> widthMapVector;
+        QVector<QVector<MapObject *>> widthMapVector;
         for (int h = 0; h < size.height(); h++) {
-            widthMapVector.push_back(nullptr);
+            QVector<MapObject *> areaMapVector;
+            widthMapVector.push_back(areaMapVector);
         }
         objectsArray.push_back(widthMapVector);
     }
@@ -44,23 +45,40 @@ void Map::addObject(MapObject *object) {
     if (object != nullptr) {
         QPoint coords = object->getCoordinates();
         if ((coords.x() < size.width()) && (coords.y() < size.height())) {
-            objectsArray[coords.x()][coords.y()] = object;
+            objectsArray[coords.x()][coords.y()].push_back(object);
             object->setMap(this);
         }
     }
 }
 
-MapObject *Map::getMapObject(QPoint coords) {
+MapObject *Map::getMapObject(QPoint coords, MapObject::Type type) {
+    QVector<MapObject *> areaMapObjectsVector = getMapObjectVector(coords);
+    for (int i = 0; i < areaMapObjectsVector.size(); i++) {
+        if (type == MapObject::WHATEVER) {
+            return areaMapObjectsVector[i];
+        } else {
+            if (areaMapObjectsVector[i]->getType() == type) {
+                return areaMapObjectsVector[i];
+            }
+        }
+    }
+    return nullptr;
+}
+
+QVector<MapObject *> Map::getMapObjectVector(QPoint coords) {
     if (coordsInMapSize(coords)) {
         return objectsArray[coords.x()][coords.y()];
     }
-    return nullptr;
+    QVector<MapObject *> emptyVector;
+    return emptyVector;
 }
 
 void Map::print() {
     for (int h = 0; h < size.height(); h++) {
         for (int w = 0; w < size.width(); w++) {
-            if (getMapObject(QPoint(w, h)) != nullptr) {
+            if (getMapObject(QPoint(w, h), MapObject::VEHICLE) != nullptr) {
+                std::cout << getMapObject(QPoint(w, h), MapObject::VEHICLE)->getChar();
+            } else if (getMapObject(QPoint(w, h)) != nullptr) {
                 std::cout << getMapObject(QPoint(w, h))->getChar();
             } else {
                 std::cout << " ";

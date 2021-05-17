@@ -23,24 +23,32 @@ MapObject::MapObject(JsonObject jsonObject, Map* map) {
     }
 }
 
-MapObject* MapObject::getNeighborhoodMapObject(Direction direction) {
+MapObject* MapObject::getNeighborhoodMapObject(Direction direction, Type type) {
+    if(type == WHATEVER){
+        type = this->getType();
+    }
     if (map == nullptr) {
         return nullptr;
     }
     switch (direction) {
         case UP:
-            return map->getMapObject(QPoint(coordinates.x(), coordinates.y() - 1));
+            return map->getMapObject(QPoint(coordinates.x(), coordinates.y() - 1), type);
             break;
         case DOWN:
-            return map->getMapObject(QPoint(coordinates.x(), coordinates.y() + 1));
+            return map->getMapObject(QPoint(coordinates.x(), coordinates.y() + 1), type);
             break;
         case LEFT:
-            return map->getMapObject(QPoint(coordinates.x() - 1, coordinates.y()));
+            return map->getMapObject(QPoint(coordinates.x() - 1, coordinates.y()), type);
             break;
         case RIGHT:
-            return map->getMapObject(QPoint(coordinates.x() + 1, coordinates.y()));
+            return map->getMapObject(QPoint(coordinates.x() + 1, coordinates.y()), type);
             break;
     }
+    return nullptr;
+}
+
+MapObject::Type MapObject::getType(){
+    return type;
 }
 
 std::string MapObject::getChar() {
@@ -49,6 +57,10 @@ std::string MapObject::getChar() {
 
 void MapObject::setMap(Map* map) {
     this->map = map;
+}
+
+Map*  MapObject::getMap(){
+    return map;
 }
 
 QPoint MapObject::getCoordinates() {
