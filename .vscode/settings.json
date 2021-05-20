@@ -51,6 +51,7 @@
         "typeinfo": "cpp",
         "variant": "cpp",
         "bit": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "qmainwindow": "cpp"
     }
 }

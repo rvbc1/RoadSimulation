@@ -9,6 +9,8 @@ class SimulationManager {
    public:
     SimulationManager();
 
+    Map* getMap();
+
    protected:
    private:
     Map* map = nullptr;

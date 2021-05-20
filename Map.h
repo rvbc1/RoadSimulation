@@ -30,6 +30,7 @@ class Map {
     MapObject *getMapObject(QPoint coords, MapObject::Type type = MapObject::WHATEVER);
     QVector<MapObject *> getMapObjectVector(QPoint coords);
 
+    QSize getSize();
     bool coordsInMapSize(QPoint coords);
 
    protected:

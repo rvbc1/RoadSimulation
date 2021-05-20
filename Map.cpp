@@ -92,6 +92,10 @@ QVector<MapObject *> Map::getMapObjectVector(QPoint coords) {
     return emptyVector;
 }
 
+QSize Map::getSize(){
+    return size;
+}
+
 void Map::print() {
     for (int h = 0; h < size.height(); h++) {
         for (int w = 0; w < size.width(); w++) {

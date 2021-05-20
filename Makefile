@@ -53,6 +53,7 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = main.cpp \
+		SimulationGui.cpp \
 		SimulationManager.cpp \
 		Map.cpp \
 		MapBuilder.cpp \
@@ -61,6 +62,7 @@ SOURCES       = main.cpp \
 		Vehicle.cpp \
 		Driver.cpp 
 OBJECTS       = main.o \
+		SimulationGui.o \
 		SimulationManager.o \
 		Map.o \
 		MapBuilder.o \
@@ -149,7 +151,9 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		MapObject.h \
 		Road.h \
 		SimulationManager.h \
+		SimulationGui.h \
 		Vehicle.h main.cpp \
+		SimulationGui.cpp \
 		SimulationManager.cpp \
 		Map.cpp \
 		MapBuilder.cpp \
@@ -336,8 +340,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents Driver.h Map.h MapBuilder.h MapObject.h Road.h SimulationManager.h Vehicle.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp SimulationManager.cpp Map.cpp MapBuilder.cpp MapObject.cpp Road.cpp Vehicle.cpp Driver.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents Driver.h Map.h MapBuilder.h MapObject.h Road.h SimulationManager.h SimulationGui.h Vehicle.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp SimulationGui.cpp SimulationManager.cpp Map.cpp MapBuilder.cpp MapObject.cpp Road.cpp Vehicle.cpp Driver.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -387,14 +391,27 @@ compiler_clean: compiler_moc_predefs_clean
 
 ####### Compile
 
-main.o: main.cpp SimulationManager.h \
+main.o: main.cpp SimulationGui.h \
+		SimulationManager.h \
 		Map.h \
 		MapObject.h \
 		ArduinoJson-v6.18.0.h \
 		Road.h \
 		Vehicle.h \
-		MapBuilder.h
+		MapBuilder.h \
+		Driver.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
+
+SimulationGui.o: SimulationGui.cpp SimulationGui.h \
+		SimulationManager.h \
+		Map.h \
+		MapObject.h \
+		ArduinoJson-v6.18.0.h \
+		Road.h \
+		Vehicle.h \
+		MapBuilder.h \
+		Driver.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SimulationGui.o SimulationGui.cpp
 
 SimulationManager.o: SimulationManager.cpp SimulationManager.h \
 		Map.h \
@@ -402,7 +419,8 @@ SimulationManager.o: SimulationManager.cpp SimulationManager.h \
 		ArduinoJson-v6.18.0.h \
 		Road.h \
 		Vehicle.h \
-		MapBuilder.h
+		MapBuilder.h \
+		Driver.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SimulationManager.o SimulationManager.cpp
 
 Map.o: Map.cpp Map.h \

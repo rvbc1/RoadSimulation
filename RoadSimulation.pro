@@ -20,6 +20,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # Input
 SOURCES += \
     main.cpp \
+    SimulationGui.cpp \
     SimulationManager.cpp \
     Map.cpp MapBuilder.cpp \
     MapObject.cpp \
@@ -34,4 +35,5 @@ HEADERS += \
     MapObject.h \
     Road.h \
     SimulationManager.h \
+    SimulationGui.h \
     Vehicle.h
