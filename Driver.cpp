@@ -44,31 +44,34 @@ Driver::Driver(JsonObject jsonObject, Map* map) {
     map->addObject(vehicle);
 }
 
-QVector<Road*> Driver::searchPath() {
-    QVector<QVector<Road*>> paths = search(startCoordinates, destinationCoordinates);
-
-    std::cout << "Available paths:" << std::endl;
-    for (QVector<Road*> path : paths) {
-        for (Road* road : path) {
-            std::cout << road->getCoordinates().x() << ", " << road->getCoordinates().y() << " -> ";
+QVector<Road*> Driver::getShortestPath(){
+    QVector<QVector<Road*>> paths = searchAvailablePaths(startCoordinates, destinationCoordinates);
+    QVector<Road*> shortestPath;
+    if(paths.isEmpty() == false){
+        int shorestPathIndex = 0;
+        int minmumPathLength = paths[0].size();
+        for(int i = 1; i < paths.size(); i++){
+            if(paths[i].size() < minmumPathLength){
+                shorestPathIndex = i;
+            }
         }
-        std::cout << std::endl;
+        shortestPath = paths[shorestPathIndex];
     }
-
-    return paths[2];
-    // } else {
-    //     throw std::runtime_error("Driver not on the road");
-    // }
+    return shortestPath;
 }
 
-QVector<QVector<Road*>> Driver::search(QPoint startPoint, QPoint endPoint, QVector<Road*> path, QVector<QVector<Road*>> foundedPaths) {
+QVector<QVector<Road*>> Driver::getPaths() {
+    return searchAvailablePaths(startCoordinates, destinationCoordinates);
+}
+
+QVector<QVector<Road*>> Driver::searchAvailablePaths(QPoint startPoint, QPoint endPoint, QVector<Road*> path, QVector<QVector<Road*>> foundedPaths) {
     if (Road* road = dynamic_cast<Road*>(map->getMapObject(startPoint, MapObject::ROAD))) {
         path.push_back(road);
         if (startPoint != endPoint) {
             QVector<Road*> avilableRoads = road->getAvailableRoads();
             for (Road* avilableRoad : avilableRoads) {
                 if (path.contains(avilableRoad) == false) {
-                    foundedPaths = search(avilableRoad->getCoordinates(), endPoint, path, foundedPaths);
+                    foundedPaths = searchAvailablePaths(avilableRoad->getCoordinates(), endPoint, path, foundedPaths);
                 }
             }
         } else {
@@ -76,4 +79,8 @@ QVector<QVector<Road*>> Driver::search(QPoint startPoint, QPoint endPoint, QVect
         }
     }
     return foundedPaths;
+}
+
+Vehicle* Driver::getVehicle(){
+    return vehicle;
 }

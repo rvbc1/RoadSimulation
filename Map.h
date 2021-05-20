@@ -19,22 +19,25 @@ class Map {
     Map(QSize size);
     Map(JsonObject jsonObject);
 
+    void addDriver(Driver *driver);
+    QVector<Driver *> getDrivers();
+
     void addObject(MapObject *object);
     void removeObject(MapObject *object);
 
     void print();
 
-    MapObject* getMapObject(QPoint coords, MapObject::Type type = MapObject::WHATEVER);
-    QVector<MapObject*> getMapObjectVector(QPoint coords);
+    MapObject *getMapObject(QPoint coords, MapObject::Type type = MapObject::WHATEVER);
+    QVector<MapObject *> getMapObjectVector(QPoint coords);
 
     bool coordsInMapSize(QPoint coords);
-
-    Driver *driver;
 
    protected:
    private:
     QSize size;
-    QVector<QVector<QVector<MapObject*>>> objectsArray;
+    QVector<QVector<QVector<MapObject *>>> objectsArray;
+
+    QVector<Driver *> driversContainer;
 
     void createObjectsArray();
 };

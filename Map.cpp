@@ -41,6 +41,15 @@ bool Map::coordsInMapSize(QPoint coords) {
     return false;
 }
 
+void Map::addDriver(Driver *driver){
+    driversContainer.push_back(driver);
+}
+
+QVector<Driver *> Map::getDrivers(){
+    QVector<Driver *> returnVector(driversContainer);
+    return returnVector;
+}
+
 void Map::addObject(MapObject *object) {
     if (object != nullptr) {
         QPoint coords = object->getCoordinates();
@@ -51,7 +60,7 @@ void Map::addObject(MapObject *object) {
     }
 }
 
-void Map::removeObject(MapObject *object){
+void Map::removeObject(MapObject *object) {
     if (object != nullptr) {
         QPoint coords = object->getCoordinates();
         if ((coords.x() < size.width()) && (coords.y() < size.height())) {
@@ -76,7 +85,8 @@ MapObject *Map::getMapObject(QPoint coords, MapObject::Type type) {
 
 QVector<MapObject *> Map::getMapObjectVector(QPoint coords) {
     if (coordsInMapSize(coords)) {
-        return objectsArray[coords.x()][coords.y()];
+        QVector<MapObject *> returnVector(objectsArray[coords.x()][coords.y()]);
+        return returnVector;
     }
     QVector<MapObject *> emptyVector;
     return emptyVector;
