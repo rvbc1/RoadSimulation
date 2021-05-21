@@ -52,6 +52,8 @@ void SimulationGui::paintEvent(QPaintEvent *event) {
 }
 
 void SimulationGui::createMenus() {
-    menuBar()->addMenu(tr("&File"));
+    QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
+    QAction *newAct = new QAction(tr("&New"), this);
+    fileMenu->addAction(newAct);
     menuBar()->addMenu(tr("Xile"));
 }
