@@ -6,6 +6,15 @@ SimulationGui::SimulationGui(SimulationManager *simulationManager) {
     this->simulationManager = simulationManager;
     setFixedWidth(800);
     setFixedHeight(600);
+
+    thread = std::thread(&SimulationGui::process, this);
+}
+
+void SimulationGui::process() {
+    while (true) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        repaint();
+    }
 }
 
 void SimulationGui::paintEvent(QPaintEvent *event) {
@@ -28,8 +37,15 @@ void SimulationGui::paintEvent(QPaintEvent *event) {
                             painter.setFont(QFont("Arial", 30));
 
                             int areaSize = 40;
-                            QRect rectangle = QRect(w*areaSize, h*areaSize, areaSize, areaSize);
-                            painter.drawText(rectangle, Qt::AlignCenter, "x");
+                            QRect rectangle = QRect(w * areaSize, h * areaSize, areaSize, areaSize);
+                            painter.drawText(rectangle, Qt::AlignCenter, QString(road->getChar().c_str()));
+                        } else if (Vehicle *vehicle = dynamic_cast<Vehicle *>(object)) {
+                            painter.setPen(Qt::red);
+                            painter.setFont(QFont("Arial", 30));
+
+                            int areaSize = 40;
+                            QRect rectangle = QRect(w * areaSize, h * areaSize, areaSize, areaSize);
+                            painter.drawText(rectangle, Qt::AlignCenter, QString(vehicle->getChar().c_str()));
                         }
                     }
                 }

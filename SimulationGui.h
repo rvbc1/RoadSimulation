@@ -15,6 +15,8 @@ class SimulationGui : public QMainWindow {
    void paintEvent(QPaintEvent *event);
    private:
     SimulationManager *simulationManager = nullptr;
+    void process();
+    std::thread thread;
 };
 
 #endif
