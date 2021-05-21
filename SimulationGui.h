@@ -16,6 +16,7 @@ class SimulationGui : public QMainWindow {
    private:
     SimulationManager *simulationManager = nullptr;
     void process();
+    void createMenus();
     std::thread thread;
 };
 
