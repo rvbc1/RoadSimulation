@@ -3,10 +3,19 @@
 #include <chrono>
 #include <iostream>
 
-SimulationManager::SimulationManager() {
-    map = MapBuilder::loadMapFromFile("Mapa.json");
+#include <QDebug>
 
-    thread = std::thread(&SimulationManager::process, this);
+SimulationManager::SimulationManager() {
+    
+}
+
+bool SimulationManager::loadMap(QString filepath){
+    map = MapBuilder::loadMapFromFile(filepath.toStdString());
+    //map = MapBuilder::loadMapFromFile("Mapa.json");
+    if(map == nullptr){
+        return false;
+    }
+    return true;
 }
 
 void SimulationManager::process() {
@@ -24,6 +33,11 @@ void SimulationManager::process() {
         }
     }
 }
+
+void SimulationManager::start(){
+    thread = std::thread(&SimulationManager::process, this);
+}
+
 
 Map* SimulationManager::getMap() {
     return map;

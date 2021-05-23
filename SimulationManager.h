@@ -11,9 +11,11 @@ class SimulationManager {
    public:
     SimulationManager();
 
+    bool loadMap(QString filepath);
+
     Map* getMap();
 
-    int aaa = 0;
+    void start();
 
    protected:
    private:
