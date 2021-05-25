@@ -12,6 +12,9 @@
 #define MAP_WIDTH_JSON_KEY "width"
 #define MAP_HEIGHT_JSON_KEY "height"
 
+#define MAP_OBJECTS_ARRAY_JSON_KEY "objects"
+
+
 class Driver;
 
 class Map {
@@ -32,6 +35,8 @@ class Map {
 
     QSize getSize();
     bool coordsInMapSize(QPoint coords);
+
+    void prepareJsonObject(JsonObject &jsonObject);
 
    protected:
    private:

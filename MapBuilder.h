@@ -8,14 +8,14 @@
 
 #define JSON_DOCUMENT_SIZE 10000
 
-
 class MapBuilder {
    public:
     static Map* loadMapFromFile(std::string filepath);
+    static void saveMapToFile(Map* map, std::string filepath);
 
    protected:
    private:
-      static Map* loadMap(JsonObject jsonObject);
+    static Map* loadMap(JsonObject jsonObject);
 };
 
 #endif

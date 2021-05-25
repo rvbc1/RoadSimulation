@@ -13,10 +13,12 @@ class SimulationGui : public QMainWindow {
 
    public slots:
     void openFile();
+    void saveFile();
     void startSimulation();
 
    protected:
     void paintEvent(QPaintEvent *event);
+    void mousePressEvent(QMouseEvent *event);
 
    private:
     SimulationManager *simulationManager = nullptr;
