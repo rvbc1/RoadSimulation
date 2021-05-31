@@ -115,7 +115,9 @@
                 "y": 2
             },
             "type": "road"
-        },
+        }
+    ],
+    "drivers": [
         {
             "stops": [
                 {
@@ -130,8 +132,7 @@
             "coordinates": {
                 "x": 3,
                 "y": 2
-            },
-            "type": "driver"
+            }
         }
     ]
 }

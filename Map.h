@@ -6,6 +6,7 @@
 
 #include "MapObject.h"
 #include "Road.h"
+#include "Driver.h"
 #include "Vehicle.h"
 
 #define MAP_SIZE_JSON_KEY "size"
@@ -13,6 +14,7 @@
 #define MAP_HEIGHT_JSON_KEY "height"
 
 #define MAP_OBJECTS_ARRAY_JSON_KEY "objects"
+#define DRIVERS_ARRAY_JSON_KEY "drivers"
 
 
 class Driver;

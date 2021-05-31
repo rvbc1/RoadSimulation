@@ -93,3 +93,7 @@ void MapObject::prepareBasicJsonObject(JsonObject &jsonObject) {
     }
     prepareInheritJsonObject(jsonObject);
 }
+
+MapObject::~MapObject(){
+    this->map->removeObject(this);
+}

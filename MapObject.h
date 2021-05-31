@@ -26,6 +26,7 @@ class MapObject {
                 NONE };
     MapObject(QPoint coordinates, Map* map = nullptr);
     MapObject(JsonObject jsonObject, Map* map = nullptr);
+    virtual ~MapObject();
 
     void setMap(Map* map);
     Map* getMap();

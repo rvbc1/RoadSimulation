@@ -112,3 +112,7 @@ Road* Driver::getNextStop() {
 Vehicle* Driver::getVehicle() {
     return vehicle;
 }
+
+void Driver::prepareInheritJsonObject(JsonObject& jsonObject){
+
+}

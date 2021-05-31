@@ -87,7 +87,7 @@ void SimulationGui::mousePressEvent(QMouseEvent *event) {
                 if (map->getMapObject(mapPos, MapObject::ROAD) == nullptr) {
                     map->addObject(new Road(mapPos));
                 } else {
-                    map->removeObject(map->getMapObject(mapPos, MapObject::ROAD));
+                    delete map->getMapObject(mapPos, MapObject::ROAD);
                 }
             }
         }

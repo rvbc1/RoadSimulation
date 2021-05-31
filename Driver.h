@@ -6,6 +6,7 @@
 #include <QVectorIterator>
 
 #include "Map.h"
+#include "MapObject.h"
 #include "Vehicle.h"
 
 #define DRIVER_OBJECT_TYPE_JSON_VALUE "driver"
@@ -44,6 +45,7 @@ class Driver : MapObject {
     Road* getCurrentStop();
     Road* getNextStop();
 
+    void prepareInheritJsonObject(JsonObject& jsonObject);
 };
 
 #endif

@@ -19,6 +19,8 @@ Map* MapBuilder::loadMapFromFile(std::string filepath) {
     return nullptr;
 }
 
+
+
 Map* MapBuilder::loadMap(JsonObject jsonObject) {
     Map* map = new Map(jsonObject);
     if ((jsonObject.containsKey(MAP_OBJECTS_ARRAY_JSON_KEY)) && (jsonObject[MAP_OBJECTS_ARRAY_JSON_KEY].is<JsonArray>())) {
@@ -30,8 +32,6 @@ Map* MapBuilder::loadMap(JsonObject jsonObject) {
                     map->addObject(new Road(v.as<JsonObject>()));
                 } else if (mapObjectType == VEHICLE_OBJECT_TYPE_JSON_VALUE) {
                     map->addObject(new Vehicle(v.as<JsonObject>()));
-                } else if (mapObjectType == DRIVER_OBJECT_TYPE_JSON_VALUE) {
-                    map->addDriver(new Driver(v.as<JsonObject>(), map));
                 }
 
             } else {
@@ -39,6 +39,14 @@ Map* MapBuilder::loadMap(JsonObject jsonObject) {
             }
         }
     }
+
+    if ((jsonObject.containsKey(DRIVERS_ARRAY_JSON_KEY)) && (jsonObject[DRIVERS_ARRAY_JSON_KEY].is<JsonArray>())) {
+        JsonArray driversArray = jsonObject[DRIVERS_ARRAY_JSON_KEY].as<JsonArray>();
+        for (JsonVariant v : driversArray) {
+            map->addDriver(new Driver(v.as<JsonObject>(), map));    
+        }
+    }
+
     return map;
 }
 
