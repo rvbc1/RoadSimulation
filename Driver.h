@@ -40,9 +40,10 @@ class Driver : MapObject {
     Map* map;
     Vehicle* vehicle = nullptr;
 
+    void setNextStop();
     Road* getCurrentStop();
     Road* getNextStop();
-    Road* setNextStop();
+
 };
 
 #endif

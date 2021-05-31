@@ -1,5 +1,6 @@
 #include "Driver.h"
 
+#include <QDebug>
 #include <iostream>
 
 // Driver::Driver(QPoint startCoordinates, QPoint destinationCoordinates, Map* map) {
@@ -88,7 +89,7 @@ QVector<QVector<Road*>> Driver::searchAvailablePaths(QPoint startPoint, QPoint e
     return foundedPaths;
 }
 
-Road* Driver::setNextStop() {
+void Driver::setNextStop() {
     currentStopIndex++;
     if (currentStopIndex >= stops.size()) {
         currentStopIndex = 0;
@@ -96,6 +97,9 @@ Road* Driver::setNextStop() {
 }
 
 Road* Driver::getCurrentStop() {
+    if (stops.isEmpty()) {
+        return nullptr;
+    }
     return stops[currentStopIndex];
 }
 Road* Driver::getNextStop() {
