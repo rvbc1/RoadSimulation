@@ -2,31 +2,47 @@
 #define Driver_h
 
 #include <QPoint>
+#include <QVector>
+#include <QVectorIterator>
 
 #include "Map.h"
 #include "Vehicle.h"
 
+#define DRIVER_OBJECT_TYPE_JSON_VALUE "driver"
+#define DRIVER_STOPS_ARRAY_JSON_KEY "stops"
 #define DRIVER_START_COORDS_JSON_KEY "startCoordinates"
 #define DRIVER_DESTINATION_COORDS_JSON_KEY "destinationCoordinates"
 
-class Driver {
+class Driver : MapObject {
    public:
-    Driver(QPoint startCoordinates, QPoint destinationCoordinates, Map* map);
+    // Driver(QPoint startCoordinates, QPoint destinationCoordinates, Map* map);
     Driver(JsonObject jsonObject, Map* map);
 
     Vehicle* getVehicle();
 
-    QVector<Road*> getShortestPath();
+    void process();
+
+    void addStop(QPoint coordinates);
+
+    QVector<Road*> getShortestPath(QPoint startPoint, QPoint endPoint);
     QVector<QVector<Road*>> getPaths();
 
     QVector<QVector<Road*>> searchAvailablePaths(QPoint startPoint, QPoint endPoint, QVector<Road*> path = QVector<Road*>(), QVector<QVector<Road*>> foundedPaths = QVector<QVector<Road*>>());
 
    protected:
    private:
-    QPoint startCoordinates;
-    QPoint destinationCoordinates;
+    QVector<Road*> stops;
+    int currentStopIndex = 0;
+    // QVectorIterator<Road*> currentStop;
+    QVector<Road*> currentPath;
+    // QPoint startCoordinates;
+    // QPoint destinationCoordinates;
     Map* map;
     Vehicle* vehicle = nullptr;
+
+    Road* getCurrentStop();
+    Road* getNextStop();
+    Road* setNextStop();
 };
 
 #endif

@@ -11,3 +11,11 @@ Vehicle::Vehicle(JsonObject jsonObject) : MapObject(jsonObject) {
 std::string Vehicle::getChar() {
     return "v";
 }
+
+void Vehicle::prepareInheritJsonObject(JsonObject& jsonObject) {
+    jsonObject["startCoordinates"]["x"] = getCoordinates().x();
+    jsonObject["startCoordinates"]["y"] = getCoordinates().y();
+
+    jsonObject["destinationCoordinates"]["x"] = 0;
+    jsonObject["destinationCoordinates"]["y"] = 1;
+}

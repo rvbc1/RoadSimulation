@@ -1,43 +1,51 @@
 #include "SimulationManager.h"
 
+#include <QDebug>
 #include <chrono>
 #include <iostream>
 
-#include <QDebug>
-
 SimulationManager::SimulationManager() {
-    
 }
 
-bool SimulationManager::loadMap(QString filepath){
+bool SimulationManager::loadMap(QString filepath) {
     map = MapBuilder::loadMapFromFile(filepath.toStdString());
-    //map = MapBuilder::loadMapFromFile("Mapa.json");
-    if(map == nullptr){
+    if (map == nullptr) {
         return false;
     }
     return true;
 }
 
 void SimulationManager::process() {
-    if (map != nullptr) {
-        if (map->getDrivers().isEmpty() == false) {
-            Driver* driver = map->getDrivers()[0];
-            QVector<QVector<Road*>> paths = driver->getPaths();
-            //QVector<Road*> path = driver->getShortestPath();
-            for (QVector<Road*> path : paths) {
-                for (Road* road : path) {
-                    driver->getVehicle()->setCoordinates(road->getCoordinates());
-                    std::this_thread::sleep_for(std::chrono::seconds(1));
-                }
+    while (true) {
+        if (map != nullptr) {
+            for (Driver* driver : map->getDrivers()) {
+                driver->process();
             }
+            std::this_thread::sleep_for(std::chrono::milliseconds(300));
+            std::unique_lock<std::mutex> lock(mtx);
+            cv.wait(lock, [this] { return !threadInPause; });
         }
     }
 }
 
-void SimulationManager::start(){
-    thread = std::thread(&SimulationManager::process, this);
+void SimulationManager::start() {
+    thread = new std::thread(&SimulationManager::process, this);
 }
 
+void SimulationManager::pause() {
+    std::unique_lock<decltype(mtx)> l(mtx);
+    threadInPause = true;
+    cv.notify_one();
+}
+void SimulationManager::resume() {
+    std::unique_lock<decltype(mtx)> l(mtx);
+    threadInPause = false;
+    cv.notify_one();
+}
+
+bool SimulationManager::isPaused() {
+    return threadInPause;
+}
 
 Map* SimulationManager::getMap() {
     return map;

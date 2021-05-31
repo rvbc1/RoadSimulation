@@ -2,56 +2,63 @@
 
 #include <iostream>
 
-Driver::Driver(QPoint startCoordinates, QPoint destinationCoordinates, Map* map) {
-    this->startCoordinates = startCoordinates;
-    this->destinationCoordinates = destinationCoordinates;
-    this->map = map;
+// Driver::Driver(QPoint startCoordinates, QPoint destinationCoordinates, Map* map) {
+//     this->startCoordinates = startCoordinates;
+//     this->destinationCoordinates = destinationCoordinates;
+//     this->map = map;
 
-    vehicle = new Vehicle(startCoordinates);
+//     vehicle = new Vehicle(startCoordinates);
+//     map->addObject(vehicle);
+// }
+
+Driver::Driver(JsonObject jsonObject, Map* map) : MapObject(jsonObject) {
+    this->map = map;
+    this->type = DRIVER;
+    //this->currentStop = QVectorIterator<Road*>(stops);
+
+    if ((jsonObject.containsKey(DRIVER_STOPS_ARRAY_JSON_KEY)) && (jsonObject[DRIVER_STOPS_ARRAY_JSON_KEY].is<JsonArray>())) {
+        JsonArray stopsArray = jsonObject[DRIVER_STOPS_ARRAY_JSON_KEY].as<JsonArray>();
+        for (JsonVariant v : stopsArray) {
+            if (v.is<JsonObject>()) {
+                addStop(MapObject::parseCoordinates(v.as<JsonObject>()));
+            }
+        }
+    }
+
+    vehicle = new Vehicle(getCoordinates());
+    if (getCoordinates() != getCurrentStop()->getCoordinates()) {
+        currentPath = getShortestPath(getCoordinates(), getCurrentStop()->getCoordinates());
+    }
+
     map->addObject(vehicle);
 }
 
-Driver::Driver(JsonObject jsonObject, Map* map) {
-    this->map = map;
-
-    if ((jsonObject.containsKey(DRIVER_START_COORDS_JSON_KEY)) && (jsonObject[DRIVER_START_COORDS_JSON_KEY].is<JsonObject>())) {
-        JsonObject jsonCoordsObject = jsonObject[DRIVER_START_COORDS_JSON_KEY].as<JsonObject>();
-        if ((jsonCoordsObject.containsKey(MAP_OBJECT_COORDS_X_JSON_KEY)) && (jsonCoordsObject[MAP_OBJECT_COORDS_X_JSON_KEY].is<uint32_t>()) && (jsonCoordsObject.containsKey(MAP_OBJECT_COORDS_Y_JSON_KEY)) && (jsonCoordsObject[MAP_OBJECT_COORDS_Y_JSON_KEY].is<uint32_t>())) {
-            startCoordinates.setX(jsonCoordsObject[MAP_OBJECT_COORDS_X_JSON_KEY].as<uint32_t>());
-            startCoordinates.setY(jsonCoordsObject[MAP_OBJECT_COORDS_Y_JSON_KEY].as<uint32_t>());
-        } else {
-            throw std::invalid_argument("Wrong object coordinates values");
-        }
-
+void Driver::process() {
+    if (currentPath.isEmpty()) {
+        currentPath = getShortestPath(getCurrentStop()->getCoordinates(), getNextStop()->getCoordinates());
+        setNextStop();
     } else {
-        throw std::invalid_argument("Driver start coordinates not defined");
+        getVehicle()->setCoordinates(currentPath.front()->getCoordinates());
+        currentPath.pop_front();
     }
-
-    if ((jsonObject.containsKey(DRIVER_DESTINATION_COORDS_JSON_KEY)) && (jsonObject[DRIVER_DESTINATION_COORDS_JSON_KEY].is<JsonObject>())) {
-        JsonObject jsonCoordsObject = jsonObject[DRIVER_DESTINATION_COORDS_JSON_KEY].as<JsonObject>();
-        if ((jsonCoordsObject.containsKey(MAP_OBJECT_COORDS_X_JSON_KEY)) && (jsonCoordsObject[MAP_OBJECT_COORDS_X_JSON_KEY].is<uint32_t>()) && (jsonCoordsObject.containsKey(MAP_OBJECT_COORDS_Y_JSON_KEY)) && (jsonCoordsObject[MAP_OBJECT_COORDS_Y_JSON_KEY].is<uint32_t>())) {
-            destinationCoordinates.setX(jsonCoordsObject[MAP_OBJECT_COORDS_X_JSON_KEY].as<uint32_t>());
-            destinationCoordinates.setY(jsonCoordsObject[MAP_OBJECT_COORDS_Y_JSON_KEY].as<uint32_t>());
-        } else {
-            throw std::invalid_argument("Wrong object coordinates values");
-        }
-
-    } else {
-        throw std::invalid_argument("Driver destiantion coordinates not defined");
-    }
-
-    vehicle = new Vehicle(startCoordinates);
-    map->addObject(vehicle);
 }
 
-QVector<Road*> Driver::getShortestPath(){
-    QVector<QVector<Road*>> paths = searchAvailablePaths(startCoordinates, destinationCoordinates);
+void Driver::addStop(QPoint coordinates) {
+    if (map != nullptr) {
+        if (Road* road = dynamic_cast<Road*>(map->getMapObject(coordinates, MapObject::ROAD))) {
+            stops.push_back(road);
+        }
+    }
+}
+
+QVector<Road*> Driver::getShortestPath(QPoint startPoint, QPoint endPoint) {
+    QVector<QVector<Road*>> paths = searchAvailablePaths(startPoint, endPoint);
     QVector<Road*> shortestPath;
-    if(paths.isEmpty() == false){
+    if (paths.isEmpty() == false) {
         int shorestPathIndex = 0;
         int minmumPathLength = paths[0].size();
-        for(int i = 1; i < paths.size(); i++){
-            if(paths[i].size() < minmumPathLength){
+        for (int i = 1; i < paths.size(); i++) {
+            if (paths[i].size() < minmumPathLength) {
                 shorestPathIndex = i;
             }
         }
@@ -61,7 +68,7 @@ QVector<Road*> Driver::getShortestPath(){
 }
 
 QVector<QVector<Road*>> Driver::getPaths() {
-    return searchAvailablePaths(startCoordinates, destinationCoordinates);
+    return searchAvailablePaths(getCurrentStop()->getCoordinates(), getNextStop()->getCoordinates());
 }
 
 QVector<QVector<Road*>> Driver::searchAvailablePaths(QPoint startPoint, QPoint endPoint, QVector<Road*> path, QVector<QVector<Road*>> foundedPaths) {
@@ -81,6 +88,23 @@ QVector<QVector<Road*>> Driver::searchAvailablePaths(QPoint startPoint, QPoint e
     return foundedPaths;
 }
 
-Vehicle* Driver::getVehicle(){
+Road* Driver::setNextStop() {
+    currentStopIndex++;
+    if (currentStopIndex >= stops.size()) {
+        currentStopIndex = 0;
+    }
+}
+
+Road* Driver::getCurrentStop() {
+    return stops[currentStopIndex];
+}
+Road* Driver::getNextStop() {
+    if ((currentStopIndex + 1) >= stops.size()) {
+        return stops[0];
+    }
+    return stops[currentStopIndex + 1];
+}
+
+Vehicle* Driver::getVehicle() {
     return vehicle;
 }

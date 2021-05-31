@@ -112,13 +112,15 @@ void Map::prepareJsonObject(JsonObject &jsonObject){
             QVector<MapObject *> objects = getMapObjectVector(QPoint(w, h));
             for (MapObject *object : objects) {
                 JsonObject mapObjectJson = jsonMapObjects.createNestedObject();
-                mapObjectJson["coordinates"]["x"] = object->getCoordinates().x();
-                mapObjectJson["coordinates"]["y"] = object->getCoordinates().y();
-                if (Road *road = dynamic_cast<Road *>(object)) {
-                    mapObjectJson["type"] = "road";
-                } else if (Vehicle *vehicle = dynamic_cast<Vehicle *>(object)) {
-                    mapObjectJson["type"] = "vehicle";
-                }
+                object->prepareJsonObject(mapObjectJson);
+                //JsonObject mapObjectJson = jsonMapObjects.createNestedObject();
+                // mapObjectJson["coordinates"]["x"] = object->getCoordinates().x();
+                // mapObjectJson["coordinates"]["y"] = object->getCoordinates().y();
+                // if (Road *road = dynamic_cast<Road *>(object)) {
+                //     mapObjectJson["type"] = "road";
+                // } else if (Vehicle *vehicle = dynamic_cast<Vehicle *>(object)) {
+                //     mapObjectJson["type"] = "vehicle";
+                // }
             }
         }
     }

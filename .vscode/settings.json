@@ -52,6 +52,9 @@
         "variant": "cpp",
         "bit": "cpp",
         "thread": "cpp",
-        "qmainwindow": "cpp"
+        "qmainwindow": "cpp",
+        "condition_variable": "cpp",
+        "future": "cpp",
+        "mutex": "cpp"
     }
 }

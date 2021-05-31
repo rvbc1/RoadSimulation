@@ -46,7 +46,7 @@ void SimulationGui::createMenus() {
     fileMenu->addAction(saveFileAction);
 
     QMenu *simulationMenu = menuBar()->addMenu(tr("&Simulation"));
-    QAction *startSimulationAction = new QAction(tr("&Start"), this);
+    QAction *startSimulationAction = new QAction(tr("&Start/Stop"), this);
     simulationMenu->addAction(startSimulationAction);
 
     connect(loadFileAction, &QAction::triggered, this, &SimulationGui::openFile);
@@ -98,6 +98,8 @@ void SimulationGui::openFile() {
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open Map File"), "", tr("JSON Files (*.json);;All Files (*)"));
     simulationManager->loadMap(fileName);
+
+    simulationManager->start();
 }
 
 void SimulationGui::saveFile() {
@@ -112,5 +114,9 @@ void SimulationGui::saveFile() {
 }
 
 void SimulationGui::startSimulation() {
-    simulationManager->start();
+    if (simulationManager->isPaused()) {
+        simulationManager->resume();
+    } else {
+        simulationManager->pause();
+    }
 }

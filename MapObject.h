@@ -21,6 +21,7 @@ class MapObject {
                      DOWN };
     enum Type { WHATEVER,
                 ROAD,
+                DRIVER,
                 VEHICLE,
                 NONE };
     MapObject(QPoint coordinates, Map* map = nullptr);
@@ -31,7 +32,6 @@ class MapObject {
 
     void setCoordinates(QPoint coordinates);
     QPoint getCoordinates();
-    
 
     virtual std::string getChar();
 
@@ -39,8 +39,15 @@ class MapObject {
 
     Type getType();
 
+    void prepareJsonObject(JsonObject& jsonObject);
+
+    static QPoint parseCoordinates(JsonObject jsonObject);
+
    protected:
     Type type = NONE;
+
+    void prepareBasicJsonObject(JsonObject& jsonObject);
+    virtual void prepareInheritJsonObject(JsonObject& jsonObject){};
 
    private:
     QPoint coordinates;

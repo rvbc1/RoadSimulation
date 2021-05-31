@@ -29,7 +29,8 @@ Map* MapBuilder::loadMap(JsonObject jsonObject) {
                 if (mapObjectType == ROAD_OBJECT_TYPE_JSON_VALUE) {
                     map->addObject(new Road(v.as<JsonObject>()));
                 } else if (mapObjectType == VEHICLE_OBJECT_TYPE_JSON_VALUE) {
-                    //map->addObject(new Vehicle(v.as<JsonObject>()));
+                    map->addObject(new Vehicle(v.as<JsonObject>()));
+                } else if (mapObjectType == DRIVER_OBJECT_TYPE_JSON_VALUE) {
                     map->addDriver(new Driver(v.as<JsonObject>(), map));
                 }
 

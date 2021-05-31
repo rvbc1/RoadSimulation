@@ -14,6 +14,7 @@ class Vehicle : public MapObject {
 
    protected:
    private:
+    void prepareInheritJsonObject(JsonObject& jsonObject);
 };
 
 #endif
