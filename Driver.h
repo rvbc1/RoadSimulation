@@ -6,6 +6,7 @@
 #include <QVectorIterator>
 
 #include "Map.h"
+#include "Road.h"
 #include "MapObject.h"
 #include "Vehicle.h"
 
@@ -14,7 +15,7 @@
 #define DRIVER_START_COORDS_JSON_KEY "startCoordinates"
 #define DRIVER_DESTINATION_COORDS_JSON_KEY "destinationCoordinates"
 
-class Driver : MapObject {
+class Driver : public MapObject {
    public:
     // Driver(QPoint startCoordinates, QPoint destinationCoordinates, Map* map);
     Driver(JsonObject jsonObject, Map* map);
@@ -34,10 +35,7 @@ class Driver : MapObject {
    private:
     QVector<Road*> stops;
     int currentStopIndex = 0;
-    // QVectorIterator<Road*> currentStop;
     QVector<Road*> currentPath;
-    // QPoint startCoordinates;
-    // QPoint destinationCoordinates;
     Map* map;
     Vehicle* vehicle = nullptr;
 
