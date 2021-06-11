@@ -1,5 +1,7 @@
 #include "MapObject.h"
 
+#include <QDebug>
+
 #include "Map.h"
 
 MapObject::MapObject(QPoint coordinates, Map *map) {
@@ -9,21 +11,21 @@ MapObject::MapObject(QPoint coordinates, Map *map) {
 
 MapObject::MapObject(JsonObject jsonObject, Map *map) {
     setMap(map);
-    if ((jsonObject.containsKey(MAP_OBJECT_COORDS_JSON_KEY)) && (jsonObject[MAP_OBJECT_COORDS_JSON_KEY].is<JsonObject>())) {
-        coordinates = MapObject::parseCoordinates(jsonObject[MAP_OBJECT_COORDS_JSON_KEY].as<JsonObject>());
-        
-    } else {
-        throw std::invalid_argument("Object coordinates not defined");
-    }
+    coordinates = MapObject::parseCoordinates(jsonObject);
 }
 
 QPoint MapObject::parseCoordinates(JsonObject jsonObject) {
     QPoint coordinates;
-    if ((jsonObject.containsKey(MAP_OBJECT_COORDS_X_JSON_KEY)) && (jsonObject[MAP_OBJECT_COORDS_X_JSON_KEY].is<uint32_t>()) && (jsonObject.containsKey(MAP_OBJECT_COORDS_Y_JSON_KEY)) && (jsonObject[MAP_OBJECT_COORDS_Y_JSON_KEY].is<uint32_t>())) {
-        coordinates.setX(jsonObject[MAP_OBJECT_COORDS_X_JSON_KEY].as<uint32_t>());
-        coordinates.setY(jsonObject[MAP_OBJECT_COORDS_Y_JSON_KEY].as<uint32_t>());
+    if ((jsonObject.containsKey(MAP_OBJECT_COORDS_JSON_KEY)) && (jsonObject[MAP_OBJECT_COORDS_JSON_KEY].is<JsonObject>())) {
+        JsonObject coordinatesJsonObject = jsonObject[MAP_OBJECT_COORDS_JSON_KEY].as<JsonObject>();
+        if ((coordinatesJsonObject.containsKey(MAP_OBJECT_COORDS_X_JSON_KEY)) && (coordinatesJsonObject[MAP_OBJECT_COORDS_X_JSON_KEY].is<uint32_t>()) && (coordinatesJsonObject.containsKey(MAP_OBJECT_COORDS_Y_JSON_KEY)) && (coordinatesJsonObject[MAP_OBJECT_COORDS_Y_JSON_KEY].is<uint32_t>())) {
+            coordinates.setX(coordinatesJsonObject[MAP_OBJECT_COORDS_X_JSON_KEY].as<uint32_t>());
+            coordinates.setY(coordinatesJsonObject[MAP_OBJECT_COORDS_Y_JSON_KEY].as<uint32_t>());
+        } else {
+            throw std::invalid_argument("Wrong object coordinates values");
+        }
     } else {
-        throw std::invalid_argument("Wrong object coordinates values");
+        throw std::invalid_argument("Object coordinates not defined");
     }
     return coordinates;
 }
@@ -82,9 +84,13 @@ void MapObject::prepareJsonObject(JsonObject &jsonObject) {
     prepareBasicJsonObject(jsonObject);
 }
 
-void MapObject::prepareBasicJsonObject(JsonObject &jsonObject) {
+void MapObject::prepareCoordinates(JsonObject &jsonObject) {
     jsonObject["coordinates"]["x"] = getCoordinates().x();
     jsonObject["coordinates"]["y"] = getCoordinates().y();
+}
+
+void MapObject::prepareBasicJsonObject(JsonObject &jsonObject) {
+    prepareCoordinates(jsonObject);
 
     if (Road *road = dynamic_cast<Road *>(this)) {
         jsonObject["type"] = "road";
@@ -94,6 +100,6 @@ void MapObject::prepareBasicJsonObject(JsonObject &jsonObject) {
     prepareInheritJsonObject(jsonObject);
 }
 
-MapObject::~MapObject(){
+MapObject::~MapObject() {
     this->map->removeObject(this);
 }

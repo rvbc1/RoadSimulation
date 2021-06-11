@@ -42,6 +42,7 @@ class MapObject {
 
     void prepareJsonObject(JsonObject& jsonObject);
 
+    void prepareCoordinates(JsonObject& jsonObject);
     static QPoint parseCoordinates(JsonObject jsonObject);
 
    protected:

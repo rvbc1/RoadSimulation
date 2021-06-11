@@ -114,5 +114,9 @@ Vehicle* Driver::getVehicle() {
 }
 
 void Driver::prepareInheritJsonObject(JsonObject& jsonObject){
-
+    JsonArray stopsJsonArray = jsonObject.createNestedArray(DRIVER_STOPS_ARRAY_JSON_KEY);
+    for(Road* stop: stops){
+        JsonObject stopJsonObject = stopsJsonArray.createNestedObject();
+        stop->prepareCoordinates(stopJsonObject);
+    }
 }

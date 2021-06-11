@@ -37,7 +37,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = RoadSimulation1.0.0
-DISTDIR = /home/rvbc-/Programming/Cpp/RoadSimulation/.tmp/RoadSimulation1.0.0
+DISTDIR = /home/rvbc-/git/RoadSimulation/.tmp/RoadSimulation1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1
 LIBS          = $(SUBLIBS) /usr/lib/x86_64-linux-gnu/libQt5Widgets.so /usr/lib/x86_64-linux-gnu/libQt5Gui.so /usr/lib/x86_64-linux-gnu/libQt5Core.so /usr/lib/x86_64-linux-gnu/libGL.so -lpthread   
@@ -393,40 +393,41 @@ compiler_clean: compiler_moc_predefs_clean
 
 main.o: main.cpp SimulationGui.h \
 		SimulationManager.h \
+		Driver.h \
 		Map.h \
 		MapObject.h \
 		ArduinoJson-v6.18.0.h \
 		Road.h \
 		Vehicle.h \
-		MapBuilder.h \
-		Driver.h
+		MapBuilder.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 SimulationGui.o: SimulationGui.cpp SimulationGui.h \
 		SimulationManager.h \
+		Driver.h \
 		Map.h \
 		MapObject.h \
 		ArduinoJson-v6.18.0.h \
 		Road.h \
 		Vehicle.h \
-		MapBuilder.h \
-		Driver.h
+		MapBuilder.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SimulationGui.o SimulationGui.cpp
 
 SimulationManager.o: SimulationManager.cpp SimulationManager.h \
+		Driver.h \
 		Map.h \
 		MapObject.h \
 		ArduinoJson-v6.18.0.h \
 		Road.h \
 		Vehicle.h \
-		MapBuilder.h \
-		Driver.h
+		MapBuilder.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SimulationManager.o SimulationManager.cpp
 
 Map.o: Map.cpp Map.h \
 		MapObject.h \
 		ArduinoJson-v6.18.0.h \
 		Road.h \
+		Driver.h \
 		Vehicle.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Map.o Map.cpp
 
@@ -435,14 +436,15 @@ MapBuilder.o: MapBuilder.cpp MapBuilder.h \
 		Map.h \
 		MapObject.h \
 		Road.h \
-		Vehicle.h \
-		Driver.h
+		Driver.h \
+		Vehicle.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MapBuilder.o MapBuilder.cpp
 
 MapObject.o: MapObject.cpp MapObject.h \
 		ArduinoJson-v6.18.0.h \
 		Map.h \
 		Road.h \
+		Driver.h \
 		Vehicle.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MapObject.o MapObject.cpp
 

@@ -122,7 +122,7 @@ void Map::prepareJsonObject(JsonObject &jsonObject) {
     JsonArray jsonDrivers = jsonObject.createNestedArray(DRIVERS_ARRAY_JSON_KEY);
     for (Driver *driver : getDrivers()) {
         JsonObject driverJson = jsonDrivers.createNestedObject();
-        //driver->prepareJsonObject(driverJson);
+        driver->prepareJsonObject(driverJson);
     }
 }
 

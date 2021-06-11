@@ -6,7 +6,7 @@
 #include "ArduinoJson-v6.18.0.h"
 #include "Map.h"
 
-#define JSON_DOCUMENT_SIZE 10000
+#define JSON_DOCUMENT_SIZE 1000000
 
 class MapBuilder {
    public:
