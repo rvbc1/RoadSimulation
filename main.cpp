@@ -4,7 +4,8 @@
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
-    SimulationGui gui(new SimulationManager());
+    SimulationManager *simulation = new SimulationManager();
+    SimulationGui gui(simulation);
     gui.show();
     return app.exec();
 }
