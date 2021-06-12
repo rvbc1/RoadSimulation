@@ -1,7 +1,7 @@
 #include "Map.h"
 
-#include <iostream>
 #include <QDebug>
+#include <iostream>
 
 Map::Map(QSize size) {
     this->size = size;
@@ -78,7 +78,7 @@ void Map::removeObject(MapObject *object) {
     }
 }
 
-void  Map::moveObject(QPoint newCoords, MapObject *object){
+void Map::moveObject(QPoint newCoords, MapObject *object) {
     if (object != nullptr) {
         QPoint oldCoords = object->getCoordinates();
         if ((oldCoords.x() < size.width()) && (oldCoords.y() < size.height())) {
@@ -134,8 +134,8 @@ void Map::prepareJsonObject(JsonObject &jsonObject) {
             QVector<MapObject *> objects = getMapObjectVector(QPoint(w, h));
             for (MapObject *object : objects) {
                 //if (object->getType() != MapObject::VEHICLE) {
-                    JsonObject mapObjectJson = jsonMapObjects.createNestedObject();
-                    object->prepareJsonObject(mapObjectJson);
+                JsonObject mapObjectJson = jsonMapObjects.createNestedObject();
+                object->prepareJsonObject(mapObjectJson);
                 //}
             }
         }
@@ -148,7 +148,7 @@ void Map::prepareJsonObject(JsonObject &jsonObject) {
     // }
 }
 
-void Map::prepareCoordinatesJsonObject(QPoint coordinates, JsonObject& jsonObject){
+void Map::prepareCoordinatesJsonObject(QPoint coordinates, JsonObject &jsonObject) {
     jsonObject["coordinates"]["x"] = coordinates.x();
     jsonObject["coordinates"]["y"] = coordinates.y();
 }
@@ -165,5 +165,15 @@ void Map::print() {
             }
         }
         std::cout << std::endl;
+    }
+}
+
+Map::~Map() {
+    for (int w = 0; w < size.width(); w++) {
+        for (int h = 0; h < size.height(); h++) {
+            for (MapObject *object : getMapObjectVector(QPoint(w, h))) {
+                delete object;
+            }
+        }
     }
 }

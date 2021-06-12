@@ -55,6 +55,20 @@
     },
     {
       "coordinates": {
+        "x": 0,
+        "y": 8
+      },
+      "type": "road"
+    },
+    {
+      "coordinates": {
+        "x": 0,
+        "y": 9
+      },
+      "type": "road"
+    },
+    {
+      "coordinates": {
         "x": 1,
         "y": 1
       },
@@ -70,28 +84,14 @@
     {
       "coordinates": {
         "x": 1,
-        "y": 7
+        "y": 6
       },
       "type": "road"
     },
     {
       "coordinates": {
         "x": 1,
-        "y": 11
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 1,
-        "y": 12
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 1,
-        "y": 13
+        "y": 9
       },
       "type": "road"
     },
@@ -112,21 +112,14 @@
     {
       "coordinates": {
         "x": 2,
-        "y": 7
+        "y": 6
       },
       "type": "road"
     },
     {
       "coordinates": {
         "x": 2,
-        "y": 11
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 2,
-        "y": 13
+        "y": 9
       },
       "type": "road"
     },
@@ -136,6 +129,29 @@
         "y": 1
       },
       "type": "road"
+    },
+    {
+      "coordinates": {
+        "x": 3,
+        "y": 1
+      },
+      "type": "vehicle",
+      "driver": {
+        "stops": [
+          {
+            "coordinates": {
+              "x": 3,
+              "y": 4
+            }
+          },
+          {
+            "coordinates": {
+              "x": 0,
+              "y": 1
+            }
+          }
+        ]
+      }
     },
     {
       "coordinates": {
@@ -161,6 +177,20 @@
     {
       "coordinates": {
         "x": 3,
+        "y": 5
+      },
+      "type": "road"
+    },
+    {
+      "coordinates": {
+        "x": 3,
+        "y": 6
+      },
+      "type": "road"
+    },
+    {
+      "coordinates": {
+        "x": 3,
         "y": 7
       },
       "type": "road"
@@ -168,14 +198,14 @@
     {
       "coordinates": {
         "x": 3,
-        "y": 11
+        "y": 8
       },
       "type": "road"
     },
     {
       "coordinates": {
         "x": 3,
-        "y": 13
+        "y": 9
       },
       "type": "road"
     },
@@ -189,14 +219,7 @@
     {
       "coordinates": {
         "x": 4,
-        "y": 4
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 4,
-        "y": 5
+        "y": 3
       },
       "type": "road"
     },
@@ -210,49 +233,7 @@
     {
       "coordinates": {
         "x": 4,
-        "y": 7
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 4,
-        "y": 8
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 4,
         "y": 9
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 4,
-        "y": 10
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 4,
-        "y": 11
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 4,
-        "y": 12
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 4,
-        "y": 13
       },
       "type": "road"
     },
@@ -280,63 +261,66 @@
     {
       "coordinates": {
         "x": 5,
+        "y": 6
+      },
+      "type": "road"
+    },
+    {
+      "coordinates": {
+        "x": 5,
+        "y": 9
+      },
+      "type": "road"
+    },
+    {
+      "coordinates": {
+        "x": 6,
+        "y": 3
+      },
+      "type": "road"
+    },
+    {
+      "coordinates": {
+        "x": 6,
+        "y": 6
+      },
+      "type": "road"
+    },
+    {
+      "coordinates": {
+        "x": 6,
+        "y": 8
+      },
+      "type": "road"
+    },
+    {
+      "coordinates": {
+        "x": 6,
+        "y": 9
+      },
+      "type": "road"
+    },
+    {
+      "coordinates": {
+        "x": 6,
+        "y": 9
+      },
+      "type": "vehicle",
+      "driver": {
+        "stops": []
+      }
+    },
+    {
+      "coordinates": {
+        "x": 7,
+        "y": 3
+      },
+      "type": "road"
+    },
+    {
+      "coordinates": {
+        "x": 7,
         "y": 4
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 5,
-        "y": 7
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 5,
-        "y": 13
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 6,
-        "y": 1
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 6,
-        "y": 3
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 6,
-        "y": 7
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 6,
-        "y": 13
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 7,
-        "y": 1
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 7,
-        "y": 3
       },
       "type": "road"
     },
@@ -357,49 +341,7 @@
     {
       "coordinates": {
         "x": 7,
-        "y": 7
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 7,
-        "y": 8
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 7,
         "y": 9
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 7,
-        "y": 10
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 7,
-        "y": 11
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 7,
-        "y": 12
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 7,
-        "y": 13
       },
       "type": "road"
     },
@@ -413,28 +355,14 @@
     {
       "coordinates": {
         "x": 8,
-        "y": 3
+        "y": 6
       },
       "type": "road"
     },
     {
       "coordinates": {
         "x": 8,
-        "y": 5
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 8,
-        "y": 10
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 8,
-        "y": 13
+        "y": 9
       },
       "type": "road"
     },
@@ -456,18 +384,48 @@
       "coordinates": {
         "x": 9,
         "y": 3
+      },
+      "type": "road"
+    },
+    {
+      "coordinates": {
+        "x": 9,
+        "y": 4
+      },
+      "type": "road"
+    },
+    {
+      "coordinates": {
+        "x": 9,
+        "y": 4
+      },
+      "type": "vehicle",
+      "driver": {
+        "stops": [
+          {
+            "coordinates": {
+              "x": 9,
+              "y": 1
+            }
+          },
+          {
+            "coordinates": {
+              "x": 12,
+              "y": 9
+            }
+          },
+          {
+            "coordinates": {
+              "x": 14,
+              "y": 4
+            }
+          }
+        ]
       }
     },
     {
       "coordinates": {
         "x": 9,
-        "y": 3
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 9,
         "y": 5
       },
       "type": "road"
@@ -475,14 +433,28 @@
     {
       "coordinates": {
         "x": 9,
-        "y": 10
+        "y": 6
       },
       "type": "road"
     },
     {
       "coordinates": {
         "x": 9,
-        "y": 13
+        "y": 7
+      },
+      "type": "road"
+    },
+    {
+      "coordinates": {
+        "x": 9,
+        "y": 8
+      },
+      "type": "road"
+    },
+    {
+      "coordinates": {
+        "x": 9,
+        "y": 9
       },
       "type": "road"
     },
@@ -490,20 +462,6 @@
       "coordinates": {
         "x": 10,
         "y": 1
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 10,
-        "y": 5
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 10,
-        "y": 8
       },
       "type": "road"
     },
@@ -516,20 +474,6 @@
     },
     {
       "coordinates": {
-        "x": 10,
-        "y": 10
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 10,
-        "y": 13
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
         "x": 11,
         "y": 1
       },
@@ -538,91 +482,49 @@
     {
       "coordinates": {
         "x": 11,
+        "y": 9
+      },
+      "type": "road"
+    },
+    {
+      "coordinates": {
+        "x": 12,
+        "y": 1
+      },
+      "type": "road"
+    },
+    {
+      "coordinates": {
+        "x": 12,
         "y": 2
       },
       "type": "road"
     },
     {
       "coordinates": {
-        "x": 11,
+        "x": 12,
         "y": 3
       },
       "type": "road"
     },
     {
       "coordinates": {
-        "x": 11,
+        "x": 12,
         "y": 4
       },
       "type": "road"
     },
     {
       "coordinates": {
-        "x": 11,
-        "y": 5
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 11,
-        "y": 10
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 11,
-        "y": 13
+        "x": 12,
+        "y": 8
       },
       "type": "road"
     },
     {
       "coordinates": {
         "x": 12,
-        "y": 1
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 12,
-        "y": 5
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 12,
-        "y": 10
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 12,
-        "y": 13
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 13,
-        "y": 1
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 13,
-        "y": 2
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 13,
-        "y": 3
+        "y": 9
       },
       "type": "road"
     },
@@ -630,20 +532,6 @@
       "coordinates": {
         "x": 13,
         "y": 4
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 13,
-        "y": 5
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 13,
-        "y": 6
       },
       "type": "road"
     },
@@ -663,123 +551,31 @@
     },
     {
       "coordinates": {
-        "x": 13,
-        "y": 9
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 13,
-        "y": 10
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 13,
-        "y": 11
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 13,
-        "y": 12
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 13,
-        "y": 13
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
         "x": 14,
-        "y": 1
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 14,
-        "y": 5
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 15,
-        "y": 1
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 15,
-        "y": 5
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 16,
-        "y": 1
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 16,
-        "y": 2
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 16,
-        "y": 3
-      },
-      "type": "road"
-    },
-    {
-      "coordinates": {
-        "x": 16,
         "y": 4
       },
       "type": "road"
     },
     {
       "coordinates": {
-        "x": 16,
+        "x": 14,
         "y": 5
       },
       "type": "road"
-    }
-  ],
-  "drivers": [
+    },
     {
       "coordinates": {
-        "x": 3,
-        "y": 2
+        "x": 14,
+        "y": 6
       },
-      "stops": [
-        {
-          "coordinates": {
-            "x": 3,
-            "y": 4
-          }
-        },
-        {
-          "coordinates": {
-            "x": 0,
-            "y": 1
-          }
-        }
-      ]
+      "type": "road"
+    },
+    {
+      "coordinates": {
+        "x": 14,
+        "y": 7
+      },
+      "type": "road"
     }
   ]
 }

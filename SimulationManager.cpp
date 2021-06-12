@@ -8,6 +8,9 @@ SimulationManager::SimulationManager() {
 }
 
 bool SimulationManager::loadMap(QString filepath) {
+    if (map != nullptr) {
+        delete map;
+    }
     map = MapBuilder::loadMapFromFile(filepath.toStdString());
     if (map == nullptr) {
         return false;
@@ -18,7 +21,7 @@ bool SimulationManager::loadMap(QString filepath) {
 void SimulationManager::process() {
     while (true) {
         if (map != nullptr) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            std::this_thread::sleep_for(std::chrono::milliseconds(300));
             std::unique_lock<std::mutex> lock(mtx);
             cv.wait(lock, [this] { return !threadInPause; });
 

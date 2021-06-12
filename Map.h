@@ -23,6 +23,7 @@ class Map {
    public:
     Map(QSize size);
     Map(JsonObject jsonObject);
+    ~Map();
 
     void addDriver(Driver *driver);
     QVector<Driver *> getDrivers();
