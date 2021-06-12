@@ -15,6 +15,8 @@ class SimulationGui : public QMainWindow {
     void openFile();
     void saveFile();
     void startSimulation();
+    void changeDrawRoad();
+    void changeDrawDriver();
 
    protected:
     void paintEvent(QPaintEvent *event);
@@ -29,7 +31,9 @@ class SimulationGui : public QMainWindow {
 
     unsigned int areaSize = 40;
 
-    void drawMap(Map* map, QPainter &painter);
+    QAction *drawRoadAction = nullptr;
+    QAction *drawDriverAction = nullptr;
+    void drawMap(Map *map, QPainter &painter);
 };
 
 #endif

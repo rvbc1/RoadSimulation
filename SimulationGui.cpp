@@ -49,9 +49,19 @@ void SimulationGui::createMenus() {
     QAction *startSimulationAction = new QAction(tr("&Start/Stop"), this);
     simulationMenu->addAction(startSimulationAction);
 
+    QMenu *editMenu = menuBar()->addMenu(tr("&Edit"));
+    drawRoadAction = new QAction(tr("&Road"), this);
+    drawDriverAction = new QAction(tr("&Driver"), this);
+    drawRoadAction->setCheckable(true);
+    drawDriverAction->setCheckable(true);
+    editMenu->addAction(drawRoadAction);
+    editMenu->addAction(drawDriverAction);
+
     connect(loadFileAction, &QAction::triggered, this, &SimulationGui::openFile);
     connect(saveFileAction, &QAction::triggered, this, &SimulationGui::saveFile);
     connect(startSimulationAction, &QAction::triggered, this, &SimulationGui::startSimulation);
+    connect(drawRoadAction, &QAction::triggered, this, &SimulationGui::changeDrawRoad);
+    connect(drawDriverAction, &QAction::triggered, this, &SimulationGui::changeDrawDriver);
 }
 
 void SimulationGui::drawMap(Map *map, QPainter &painter) {
@@ -84,10 +94,22 @@ void SimulationGui::mousePressEvent(QMouseEvent *event) {
         if (simulationManager != nullptr) {
             Map *map = simulationManager->getMap();
             if (map != nullptr) {
-                if (map->getMapObject(mapPos, MapObject::ROAD) == nullptr) {
-                    map->addObject(new Road(mapPos));
-                } else {
-                    delete map->getMapObject(mapPos, MapObject::ROAD);
+                if (drawRoadAction->isChecked()) {
+                    if (map->getMapObject(mapPos, MapObject::ROAD) == nullptr) {
+                        map->addObject(new Road(mapPos));
+                    } else {
+                        MapObject *mapObject = map->getMapObject(mapPos, MapObject::ROAD);
+                        map->removeObject(mapObject);
+                        delete mapObject;
+                    }
+                } else if (drawDriverAction->isChecked()) {
+                    if (map->getMapObject(mapPos, MapObject::VEHICLE) == nullptr) {
+                        map->addObject(new Vehicle(mapPos));
+                    } else {
+                        MapObject *mapObject = map->getMapObject(mapPos, MapObject::VEHICLE);
+                        map->removeObject(mapObject);
+                        delete mapObject;
+                    }
                 }
             }
         }
@@ -118,5 +140,17 @@ void SimulationGui::startSimulation() {
         simulationManager->resume();
     } else {
         simulationManager->pause();
+    }
+}
+
+void SimulationGui::changeDrawRoad() {
+    if (drawRoadAction->isChecked()) {
+        drawDriverAction->setChecked(false);
+    }
+}
+
+void SimulationGui::changeDrawDriver() {
+    if (drawDriverAction->isChecked()) {
+        drawRoadAction->setChecked(false);
     }
 }

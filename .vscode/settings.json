@@ -55,6 +55,7 @@
         "qmainwindow": "cpp",
         "condition_variable": "cpp",
         "future": "cpp",
-        "mutex": "cpp"
+        "mutex": "cpp",
+        "qdebug": "cpp"
     }
 }

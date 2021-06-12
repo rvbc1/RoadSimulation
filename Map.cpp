@@ -1,6 +1,7 @@
 #include "Map.h"
 
 #include <iostream>
+#include <QDebug>
 
 Map::Map(QSize size) {
     this->size = size;
@@ -42,6 +43,7 @@ bool Map::coordsInMapSize(QPoint coords) {
 }
 
 void Map::addDriver(Driver *driver) {
+    driver->setMap(this);
     driversContainer.push_back(driver);
 }
 
@@ -57,6 +59,9 @@ void Map::addObject(MapObject *object) {
             if (getMapObject(coords, object->getType()) == nullptr) {
                 objectsArray[coords.x()][coords.y()].push_back(object);
                 object->setMap(this);
+                if (Vehicle *vehicle = dynamic_cast<Vehicle *>(object)) {
+                    addDriver(vehicle->getDriver());
+                }
             } else {
                 throw std::runtime_error("Object exists");
             }
@@ -69,6 +74,23 @@ void Map::removeObject(MapObject *object) {
         QPoint coords = object->getCoordinates();
         if ((coords.x() < size.width()) && (coords.y() < size.height())) {
             objectsArray[coords.x()][coords.y()].removeOne(object);
+        }
+    }
+}
+
+void  Map::moveObject(QPoint newCoords, MapObject *object){
+    if (object != nullptr) {
+        QPoint oldCoords = object->getCoordinates();
+        if ((oldCoords.x() < size.width()) && (oldCoords.y() < size.height())) {
+            objectsArray[oldCoords.x()][oldCoords.y()].removeOne(object);
+        }
+
+        if ((newCoords.x() < size.width()) && (newCoords.y() < size.height())) {
+            if (getMapObject(newCoords, object->getType()) == nullptr) {
+                objectsArray[newCoords.x()][newCoords.y()].push_back(object);
+            } else {
+                throw std::runtime_error("Object exists");
+            }
         }
     }
 }

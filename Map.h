@@ -29,6 +29,7 @@ class Map {
 
     void addObject(MapObject *object);
     void removeObject(MapObject *object);
+    void moveObject(QPoint newCoords, MapObject *object);
 
     void print();
 

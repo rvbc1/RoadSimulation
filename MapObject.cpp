@@ -71,9 +71,8 @@ Map *MapObject::getMap() {
 }
 
 void MapObject::setCoordinates(QPoint coordinates) {
-    this->map->removeObject(this);
+    this->map->moveObject(coordinates, this);
     this->coordinates = coordinates;
-    this->map->addObject(this);
 }
 
 QPoint MapObject::getCoordinates() {

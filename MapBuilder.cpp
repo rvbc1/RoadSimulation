@@ -40,12 +40,12 @@ Map* MapBuilder::loadMap(JsonObject jsonObject) {
         }
     }
 
-    if ((jsonObject.containsKey(DRIVERS_ARRAY_JSON_KEY)) && (jsonObject[DRIVERS_ARRAY_JSON_KEY].is<JsonArray>())) {
-        JsonArray driversArray = jsonObject[DRIVERS_ARRAY_JSON_KEY].as<JsonArray>();
-        for (JsonVariant v : driversArray) {
-            map->addDriver(new Driver(v.as<JsonObject>(), map));    
-        }
-    }
+    // if ((jsonObject.containsKey(DRIVERS_ARRAY_JSON_KEY)) && (jsonObject[DRIVERS_ARRAY_JSON_KEY].is<JsonArray>())) {
+    //     JsonArray driversArray = jsonObject[DRIVERS_ARRAY_JSON_KEY].as<JsonArray>();
+    //     for (JsonVariant v : driversArray) {
+    //         map->addDriver(new Driver(v.as<JsonObject>(), map));    
+    //     }
+    // }
 
     return map;
 }
