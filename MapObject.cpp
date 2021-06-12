@@ -84,8 +84,9 @@ void MapObject::prepareJsonObject(JsonObject &jsonObject) {
 }
 
 void MapObject::prepareCoordinates(JsonObject &jsonObject) {
-    jsonObject["coordinates"]["x"] = getCoordinates().x();
-    jsonObject["coordinates"]["y"] = getCoordinates().y();
+    Map::prepareCoordinatesJsonObject(getCoordinates(), jsonObject);
+    // jsonObject["coordinates"]["x"] = getCoordinates().x();
+    // jsonObject["coordinates"]["y"] = getCoordinates().y();
 }
 
 void MapObject::prepareBasicJsonObject(JsonObject &jsonObject) {

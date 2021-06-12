@@ -30,6 +30,8 @@ class SimulationGui : public QMainWindow {
     QSize windowSize;
 
     unsigned int areaSize = 40;
+    unsigned int offsetY = 30;
+
 
     QAction *drawRoadAction = nullptr;
     QAction *drawDriverAction = nullptr;

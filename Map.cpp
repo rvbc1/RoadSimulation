@@ -43,7 +43,7 @@ bool Map::coordsInMapSize(QPoint coords) {
 }
 
 void Map::addDriver(Driver *driver) {
-    driver->setMap(this);
+    //driver->setMap(this);
     driversContainer.push_back(driver);
 }
 
@@ -133,19 +133,24 @@ void Map::prepareJsonObject(JsonObject &jsonObject) {
         for (int h = 0; h < getSize().height(); h++) {
             QVector<MapObject *> objects = getMapObjectVector(QPoint(w, h));
             for (MapObject *object : objects) {
-                if (object->getType() != MapObject::VEHICLE) {
+                //if (object->getType() != MapObject::VEHICLE) {
                     JsonObject mapObjectJson = jsonMapObjects.createNestedObject();
                     object->prepareJsonObject(mapObjectJson);
-                }
+                //}
             }
         }
     }
 
-    JsonArray jsonDrivers = jsonObject.createNestedArray(DRIVERS_ARRAY_JSON_KEY);
-    for (Driver *driver : getDrivers()) {
-        JsonObject driverJson = jsonDrivers.createNestedObject();
-        driver->prepareJsonObject(driverJson);
-    }
+    // JsonArray jsonDrivers = jsonObject.createNestedArray(DRIVERS_ARRAY_JSON_KEY);
+    // for (Driver *driver : getDrivers()) {
+    //     JsonObject driverJson = jsonDrivers.createNestedObject();
+    //     driver->prepareJsonObject(driverJson);
+    // }
+}
+
+void Map::prepareCoordinatesJsonObject(QPoint coordinates, JsonObject& jsonObject){
+    jsonObject["coordinates"]["x"] = coordinates.x();
+    jsonObject["coordinates"]["y"] = coordinates.y();
 }
 
 void Map::print() {

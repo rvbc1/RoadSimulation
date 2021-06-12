@@ -13,13 +13,11 @@
 //     map->addObject(vehicle);
 // }
 
-Driver::Driver(Vehicle* vehicle) : MapObject(vehicle->getCoordinates()) {
-    this->type = DRIVER;
+Driver::Driver(Vehicle* vehicle) {
     this->vehicle = vehicle;
 }
 
-Driver::Driver(Vehicle* vehicle, JsonObject jsonObject) : MapObject(vehicle->getCoordinates()) {
-    this->type = DRIVER;
+Driver::Driver(Vehicle* vehicle, JsonObject jsonObject) {
     this->vehicle = vehicle;
 
     if ((jsonObject.containsKey(DRIVER_STOPS_ARRAY_JSON_KEY)) && (jsonObject[DRIVER_STOPS_ARRAY_JSON_KEY].is<JsonArray>())) {
@@ -32,8 +30,7 @@ Driver::Driver(Vehicle* vehicle, JsonObject jsonObject) : MapObject(vehicle->get
     }
 }
 
-Driver::Driver(JsonObject jsonObject, Map* map) : MapObject(jsonObject) {
-    this->type = DRIVER;
+Driver::Driver(JsonObject jsonObject, Map* map) {
     //this->currentStop = QVectorIterator<Road*>(stops);
 
     if ((jsonObject.containsKey(DRIVER_STOPS_ARRAY_JSON_KEY)) && (jsonObject[DRIVER_STOPS_ARRAY_JSON_KEY].is<JsonArray>())) {
@@ -67,8 +64,10 @@ void Driver::process() {
         if (currentPath.front() == getVehicle()->getCoordinates()) {
             currentPath.pop_front();
         }
-        getVehicle()->setCoordinates(currentPath.front());
-        currentPath.pop_front();
+        if (getMap()->getMapObject(currentPath.front(), MapObject::DRIVER) == nullptr) {
+            getVehicle()->setCoordinates(currentPath.front());
+            currentPath.pop_front();
+        }
     }
 }
 
@@ -146,10 +145,18 @@ Vehicle* Driver::getVehicle() {
     return vehicle;
 }
 
-void Driver::prepareInheritJsonObject(JsonObject& jsonObject) {
+Map* Driver::getMap() {
+    return vehicle->getMap();
+}
+QPoint Driver::getCoordinates() {
+    return vehicle->getCoordinates();
+}
+
+void Driver::prepareJsonObject(JsonObject& jsonObject) {
     JsonArray stopsJsonArray = jsonObject.createNestedArray(DRIVER_STOPS_ARRAY_JSON_KEY);
     for (QPoint stop : stops) {
         JsonObject stopJsonObject = stopsJsonArray.createNestedObject();
+        Map::prepareCoordinatesJsonObject(stop, stopJsonObject);
         //stop->prepareCoordinates(stopJsonObject);
     }
 }

@@ -10,7 +10,7 @@
 SimulationGui::SimulationGui(SimulationManager *simulationManager) : QMainWindow() {
     this->simulationManager = simulationManager;
     windowSize.setWidth(800);
-    windowSize.setHeight(600);
+    windowSize.setHeight(700);
     setFixedSize(windowSize);
     createMenus();
     thread = std::thread(&SimulationGui::process, this);
@@ -31,9 +31,25 @@ void SimulationGui::paintEvent(QPaintEvent *event) {
             drawMap(map, painter);
         }
         QPoint p = mapFromGlobal(QCursor::pos());
+        p.setY(p.y() - offsetY);
+        if (map != nullptr) {
+            if ((p.x() / (int)areaSize) >= map->getSize().width()) {
+                p.setX((map->getSize().width() - 1) * areaSize);
+            }
+
+            if ((p.y() / (int)areaSize) >= map->getSize().height()) {
+                p.setY((map->getSize().height() - 1) * areaSize);
+            }
+        }
+
         if ((p.x() > 0) && (p.y() > 0) && (p.x() < windowSize.width()) && (p.y() < windowSize.height())) {
-            QRect reactangle((p.x() / areaSize) * areaSize, (p.y() / areaSize) * areaSize, areaSize, areaSize);
+            QRect reactangle((p.x() / areaSize) * areaSize, (p.y() / areaSize) * areaSize + offsetY, areaSize, areaSize);
             painter.drawRect(reactangle);
+
+            QRect rectangle = QRect(0, windowSize.height() - 50, windowSize.width(), 50);
+            painter.setPen(Qt::black);
+            painter.setFont(QFont("Arial", 20));
+            painter.drawText(rectangle, Qt::AlignLeft, QString("x: " + QString::number(p.x() / areaSize) + " y: " + QString::number(p.y() / areaSize)));
         }
     }
 }
@@ -65,6 +81,8 @@ void SimulationGui::createMenus() {
 }
 
 void SimulationGui::drawMap(Map *map, QPainter &painter) {
+    QRect reactangle(0, offsetY, map->getSize().width() * areaSize, map->getSize().height() * areaSize);
+    painter.drawRect(reactangle);
     for (int w = 0; w < map->getSize().width(); w++) {
         for (int h = 0; h < map->getSize().height(); h++) {
             QVector<MapObject *> objects = map->getMapObjectVector(QPoint(w, h));
@@ -73,13 +91,13 @@ void SimulationGui::drawMap(Map *map, QPainter &painter) {
                     painter.setPen(Qt::blue);
                     painter.setFont(QFont("Arial", 40));
 
-                    QRect rectangle = QRect(w * areaSize, h * areaSize, areaSize, areaSize);
+                    QRect rectangle = QRect(w * areaSize, h * areaSize + offsetY, areaSize, areaSize);
                     painter.drawText(rectangle, Qt::AlignCenter, QString(road->getChar().c_str()));
                 } else if (Vehicle *vehicle = dynamic_cast<Vehicle *>(object)) {
                     painter.setPen(Qt::red);
                     painter.setFont(QFont("Arial", 40));
 
-                    QRect rectangle = QRect(w * areaSize, h * areaSize, areaSize, areaSize);
+                    QRect rectangle = QRect(w * areaSize, h * areaSize + offsetY, areaSize, areaSize);
                     painter.drawText(rectangle, Qt::AlignCenter, QString(vehicle->getChar().c_str()));
                 }
             }
@@ -90,6 +108,16 @@ void SimulationGui::drawMap(Map *map, QPainter &painter) {
 void SimulationGui::mousePressEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton) {
         QPoint mousePos = event->pos();
+        mousePos.setY(mousePos.y() - offsetY);
+        if (simulationManager->getMap() != nullptr) {
+            if ((mousePos.x() / (int)areaSize) >= simulationManager->getMap()->getSize().width()) {
+                mousePos.setX((simulationManager->getMap()->getSize().width() - 1) * areaSize);
+            }
+
+            if ((mousePos.y() / (int)areaSize) >= simulationManager->getMap()->getSize().height()) {
+                mousePos.setY((simulationManager->getMap()->getSize().height() - 1) * areaSize);
+            }
+        }
         QPoint mapPos((mousePos.x() / areaSize), (mousePos.y() / areaSize));
         if (simulationManager != nullptr) {
             Map *map = simulationManager->getMap();

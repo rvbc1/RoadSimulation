@@ -18,10 +18,10 @@ bool SimulationManager::loadMap(QString filepath) {
 void SimulationManager::process() {
     while (true) {
         if (map != nullptr) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
             std::unique_lock<std::mutex> lock(mtx);
             cv.wait(lock, [this] { return !threadInPause; });
-            
+
             for (Driver* driver : map->getDrivers()) {
                 driver->process();
             }

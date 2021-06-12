@@ -12,6 +12,7 @@ class Vehicle : public MapObject {
    public:
     Vehicle(QPoint coordinates);
     Vehicle(JsonObject jsonObject);
+    ~Vehicle();
 
     Driver* getDriver();
 

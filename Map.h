@@ -40,6 +40,7 @@ class Map {
     bool coordsInMapSize(QPoint coords);
 
     void prepareJsonObject(JsonObject &jsonObject);
+    static void prepareCoordinatesJsonObject(QPoint coordinates, JsonObject& jsonObject);
 
    protected:
    private:

@@ -6,8 +6,8 @@
 #include <QVectorIterator>
 
 #include "Map.h"
-#include "Road.h"
 #include "MapObject.h"
+#include "Road.h"
 
 class Vehicle;
 
@@ -16,11 +16,11 @@ class Vehicle;
 #define DRIVER_START_COORDS_JSON_KEY "startCoordinates"
 #define DRIVER_DESTINATION_COORDS_JSON_KEY "destinationCoordinates"
 
-class Driver : public MapObject {
+class Driver {
    public:
     // Driver(QPoint startCoordinates, QPoint destinationCoordinates, Map* map);
-    Driver(Vehicle *vehicle);
-    Driver(Vehicle *vehicle, JsonObject jsonObject);
+    Driver(Vehicle* vehicle);
+    Driver(Vehicle* vehicle, JsonObject jsonObject);
     Driver(JsonObject jsonObject, Map* map);
 
     Vehicle* getVehicle();
@@ -34,9 +34,11 @@ class Driver : public MapObject {
 
     QVector<QVector<QPoint>> searchAvailablePaths(QPoint startPoint, QPoint endPoint, QVector<QPoint> path = QVector<QPoint>(), QVector<QVector<QPoint>> foundedPaths = QVector<QVector<QPoint>>());
 
-  // protected:
-  // private:
-  //  QVector<Road*> stops;
+    void prepareJsonObject(JsonObject& jsonObject);
+
+   protected:
+   private:
+    //  QVector<Road*> stops;
     QVector<QPoint> stops;
     int currentStopIndex = 0;
     QVector<QPoint> currentPath;
@@ -46,7 +48,8 @@ class Driver : public MapObject {
     QPoint getCurrentStop();
     QPoint getNextStop();
 
-    void prepareInheritJsonObject(JsonObject& jsonObject);
+    Map* getMap();
+    QPoint getCoordinates();
 };
 
 #endif
