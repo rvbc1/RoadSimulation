@@ -15,6 +15,7 @@ class Road : public MapObject {
     std::string getChar();
 
     QVector<Road*> getAvailableRoads();
+    QVector<Direction> getAvailableDirections();
 
    protected:
    private:

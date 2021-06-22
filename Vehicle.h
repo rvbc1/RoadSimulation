@@ -19,9 +19,10 @@ class Vehicle : public MapObject {
     std::string getChar();
 
    protected:
+    void prepareInheritJsonObject(JsonObject& jsonObject);
+
    private:
     Driver* driver = nullptr;
-    void prepareInheritJsonObject(JsonObject& jsonObject);
 };
 
 #endif

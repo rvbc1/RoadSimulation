@@ -44,6 +44,8 @@ class Driver {
     QVector<QPoint> currentPath;
     Vehicle* vehicle = nullptr;
 
+    MapObject::Direction direction = MapObject::UP;
+
     void setNextStop();
     QPoint getCurrentStop();
     QPoint getNextStop();

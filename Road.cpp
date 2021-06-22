@@ -8,6 +8,23 @@ Road::Road(JsonObject jsonObject) : MapObject(jsonObject) {
     type = ROAD;
 }
 
+QVector<MapObject::Direction> Road::getAvailableDirections() {
+    QVector<MapObject::Direction> availableDirections;
+    if (Road *road = dynamic_cast<Road *>(getNeighborhoodMapObject(UP))) {
+        availableDirections.push_back(UP);
+    }
+    if (Road *road = dynamic_cast<Road *>(getNeighborhoodMapObject(DOWN))) {
+        availableDirections.push_back(DOWN);
+    }
+    if (Road *road = dynamic_cast<Road *>(getNeighborhoodMapObject(LEFT))) {
+        availableDirections.push_back(LEFT);
+    }
+    if (Road *road = dynamic_cast<Road *>(getNeighborhoodMapObject(RIGHT))) {
+        availableDirections.push_back(RIGHT);
+    }
+    return availableDirections;
+}
+
 QVector<Road *> Road::getAvailableRoads() {
     QVector<Road *> availableRoads;
     if (Road *road = dynamic_cast<Road *>(getNeighborhoodMapObject(UP))) {

@@ -86,11 +86,11 @@ void Map::moveObject(QPoint newCoords, MapObject *object) {
         }
 
         if ((newCoords.x() < size.width()) && (newCoords.y() < size.height())) {
-            if (getMapObject(newCoords, object->getType()) == nullptr) {
+           // if (getMapObject(newCoords, object->getType()) == nullptr) {
                 objectsArray[newCoords.x()][newCoords.y()].push_back(object);
-            } else {
-                throw std::runtime_error("Object exists");
-            }
+         //   } else {
+         //       throw std::runtime_error("Object exists");
+        //    }
         }
     }
 }

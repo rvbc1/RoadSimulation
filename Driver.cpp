@@ -1,6 +1,7 @@
 #include "Driver.h"
 
 #include <QDebug>
+#include <QRandomGenerator>
 
 #include "Vehicle.h"
 
@@ -28,6 +29,13 @@ Driver::Driver(Vehicle* vehicle, JsonObject jsonObject) {
             }
         }
     }
+
+    // if (Road* road = dynamic_cast<Road*>(getMap()->getMapObject(vehicle->getCoordinates(), MapObject::ROAD))) {
+    //     QVector<MapObject::Direction> directions = road->getAvailableDirections();
+    //     if(directions.empty() == false){
+    //         direction = directions[QRandomGenerator::global()->bounded(0, directions.size())];
+    //     }
+    // }
 }
 
 Driver::Driver(JsonObject jsonObject, Map* map) {
@@ -44,31 +52,46 @@ Driver::Driver(JsonObject jsonObject, Map* map) {
 
     // vehicle = new Vehicle(getCoordinates());
 
-    map->addObject(vehicle);
+    //map->addObject(vehicle);
 }
 
 void Driver::process() {
-    if (currentPath.isEmpty()) {
-        if (stops.size() > 1) {
-            if (getVehicle()->getCoordinates() != getCurrentStop()) {
-                currentPath = getShortestPath(getCoordinates(), getCurrentStop());
-            } else {
-                currentPath = getShortestPath(getCurrentStop(), getNextStop());
-                setNextStop();
-            }
-        } else if ((stops.size() == 1) && (getVehicle()->getCoordinates() != getCurrentStop())) {
-            currentPath = getShortestPath(getCoordinates(), getCurrentStop());
+    if (Road* road = dynamic_cast<Road*>(getMap()->getMapObject(vehicle->getCoordinates(), MapObject::ROAD))) {
+        QVector<MapObject::Direction> directions = road->getAvailableDirections();
+        directions.removeOne(MapObject::getOppositeDirection(direction));
+        if((directions.size() >= 2) || (directions.contains(direction) == false)){
+            direction = directions[QRandomGenerator::global()->bounded(0, directions.size())];
+        } else{
+            direction = directions[QRandomGenerator::global()->bounded(0, directions.size())];
         }
+        // if(directions.empty() == false){
+        //     direction = directions[QRandomGenerator::global()->bounded(0, directions.size())];
+        // }
+
+        getVehicle()->setCoordinates(road->getNeighborhoodMapObject(direction, MapObject::ROAD)->getCoordinates());
     }
-    if (currentPath.isEmpty() == false) {
-        if (currentPath.front() == getVehicle()->getCoordinates()) {
-            currentPath.pop_front();
-        }
-        if (getMap()->getMapObject(currentPath.front(), MapObject::DRIVER) == nullptr) {
-            getVehicle()->setCoordinates(currentPath.front());
-            currentPath.pop_front();
-        }
-    }
+
+    // if (currentPath.isEmpty()) {
+    //     if (stops.size() > 1) {
+    //         if (getVehicle()->getCoordinates() != getCurrentStop()) {
+    //             currentPath = getShortestPath(getCoordinates(), getCurrentStop());
+    //         } else {
+    //             currentPath = getShortestPath(getCurrentStop(), getNextStop());
+    //             setNextStop();
+    //         }
+    //     } else if ((stops.size() == 1) && (getVehicle()->getCoordinates() != getCurrentStop())) {
+    //         currentPath = getShortestPath(getCoordinates(), getCurrentStop());
+    //     }
+    // }
+    // if (currentPath.isEmpty() == false) {
+    //     if (currentPath.front() == getVehicle()->getCoordinates()) {
+    //         currentPath.pop_front();
+    //     }
+    //     if (getMap()->getMapObject(currentPath.front(), MapObject::DRIVER) == nullptr) {
+    //         getVehicle()->setCoordinates(currentPath.front());
+    //         currentPath.pop_front();
+    //     }
+    // }
 }
 
 void Driver::addStop(QPoint coordinates) {

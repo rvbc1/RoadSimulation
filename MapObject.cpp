@@ -30,6 +30,23 @@ QPoint MapObject::parseCoordinates(JsonObject jsonObject) {
     return coordinates;
 }
 
+MapObject::Direction MapObject::getOppositeDirection(Direction direction){
+    switch (direction) {
+        case UP:
+            return DOWN;
+            break;
+        case DOWN:
+            return UP;
+            break;
+        case LEFT:
+            return RIGHT;
+            break;
+        case RIGHT:
+            return LEFT;
+            break;
+    }
+}
+
 MapObject *MapObject::getNeighborhoodMapObject(Direction direction, Type type) {
     if (type == WHATEVER) {
         type = this->getType();

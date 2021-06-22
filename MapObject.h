@@ -36,6 +36,7 @@ class MapObject {
 
     virtual std::string getChar();
 
+    static Direction getOppositeDirection(Direction direction);
     MapObject* getNeighborhoodMapObject(Direction direction, Type type = WHATEVER);
 
     Type getType();
