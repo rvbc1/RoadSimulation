@@ -3,14 +3,29 @@
 #include <QAction>
 #include <QDebug>
 #include <QFileDialog>
+#include <QImage>
 #include <QMenuBar>
 #include <QMouseEvent>
 #include <QPainter>
 
+QRectF source(0.0, 0.0, 144.0, 144.0);
+QRectF sourceBig(0.0, 0.0, 168.0, 168.0);
+QImage roadVerticalLeftImage("sprites/vertical_left.png");
+QImage roadVerticalRightImage("sprites/vertical_right.png");
+QImage roadVerticalImage("sprites/vertical.png");
+QImage roadHorizontalUpImage("sprites/horizontal_up.png");
+QImage roadHorizontalDownImage("sprites/horizontal_down.png");
+QImage roadHorizontalImage("sprites/horizontal.png");
+QImage roadUpLeftImage("sprites/up_left.png");
+QImage roadUpRightImage("sprites/up_right.png");
+QImage roadDownLeftImage("sprites/down_left.png");
+QImage roadDownRightImage("sprites/down_right.png");
+QImage roadCrossImage("sprites/x.png");
+
 SimulationGui::SimulationGui(SimulationManager *simulationManager) : QMainWindow() {
     this->simulationManager = simulationManager;
-    windowSize.setWidth(800);
-    windowSize.setHeight(700);
+    windowSize.setWidth(1400);
+    windowSize.setHeight(900);
     setFixedSize(windowSize);
     createMenus();
     thread = std::thread(&SimulationGui::process, this);
@@ -83,19 +98,57 @@ void SimulationGui::createMenus() {
 void SimulationGui::drawMap(Map *map, QPainter &painter) {
     QRect reactangle(0, offsetY, map->getSize().width() * areaSize, map->getSize().height() * areaSize);
     painter.drawRect(reactangle);
+
+    //painter.drawImage(target, roadImage, source);
     for (int w = 0; w < map->getSize().width(); w++) {
         for (int h = 0; h < map->getSize().height(); h++) {
             QVector<MapObject *> objects = map->getMapObjectVector(QPoint(w, h));
             for (MapObject *object : objects) {
                 if (Road *road = dynamic_cast<Road *>(object)) {
                     painter.setPen(Qt::blue);
-                    painter.setFont(QFont("Arial", 40));
+                    painter.setFont(QFont("Arial", 60));
 
                     QRect rectangle = QRect(w * areaSize, h * areaSize + offsetY, areaSize, areaSize);
-                    painter.drawText(rectangle, Qt::AlignCenter, QString(road->getChar().c_str()));
+
+                    switch (road->getOrientation()) {
+                        case Road::HORIZONTAL_UP:
+                            painter.drawImage(rectangle, roadHorizontalUpImage, source);
+                            break;
+                        case Road::HORIZONTAL_DOWN:
+                            painter.drawImage(rectangle, roadHorizontalDownImage, source);
+                            break;
+                        case Road::HORIZONTAL:
+                            painter.drawImage(rectangle, roadHorizontalImage, sourceBig);
+                            break;
+                        case Road::VERTICAL_LEFT:
+                            painter.drawImage(rectangle, roadVerticalLeftImage, source);
+                            break;
+                        case Road::VERTICAL_RIGHT:
+                            painter.drawImage(rectangle, roadVerticalRightImage, source);
+                            break;
+                        case Road::VERTICAL:
+                            painter.drawImage(rectangle, roadVerticalImage, sourceBig);
+                            break;
+                        case Road::UP_LEFT:
+                            painter.drawImage(rectangle, roadUpLeftImage, source);
+                            break;
+                        case Road::UP_RIGHT:
+                            painter.drawImage(rectangle, roadUpRightImage, source);
+                            break;
+                        case Road::DOWN_LEFT:
+                            painter.drawImage(rectangle, roadDownLeftImage, source);
+                            break;
+                        case Road::DOWN_RIGHT:
+                            painter.drawImage(rectangle, roadDownRightImage, source);
+                            break;
+                        case Road::CROSS:
+                            painter.drawImage(rectangle, roadCrossImage, source);
+                            break;
+                    }
+                    //painter.drawText(rectangle, Qt::AlignCenter, QString(road->getChar().c_str()));
                 } else if (Vehicle *vehicle = dynamic_cast<Vehicle *>(object)) {
                     painter.setPen(Qt::red);
-                    painter.setFont(QFont("Arial", 40));
+                    painter.setFont(QFont("Arial", 60));
 
                     QRect rectangle = QRect(w * areaSize, h * areaSize + offsetY, areaSize, areaSize);
                     painter.drawText(rectangle, Qt::AlignCenter, QString(vehicle->getChar().c_str()));

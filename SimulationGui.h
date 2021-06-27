@@ -29,7 +29,7 @@ class SimulationGui : public QMainWindow {
     std::thread thread;
     QSize windowSize;
 
-    unsigned int areaSize = 40;
+    unsigned int areaSize = 60;
     unsigned int offsetY = 30;
 
 

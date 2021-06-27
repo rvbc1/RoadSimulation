@@ -23,7 +23,7 @@ Driver* Vehicle::getDriver() {
 }
 
 std::string Vehicle::getChar() {
-    return "v";
+    return "*";
 }
 
 void Vehicle::prepareInheritJsonObject(JsonObject& jsonObject) {

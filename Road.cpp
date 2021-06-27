@@ -79,3 +79,41 @@ std::string Road::getChar() {
 
     return "╬";
 }
+
+Road::Orientation Road::getOrientation(){
+    if ((getNeighborhoodMapObject(UP) != nullptr) && (getNeighborhoodMapObject(DOWN) != nullptr) && (getNeighborhoodMapObject(LEFT) != nullptr) && (getNeighborhoodMapObject(RIGHT) != nullptr)) {
+        return CROSS;
+    }
+    if ((getNeighborhoodMapObject(UP) != nullptr) && (getNeighborhoodMapObject(LEFT) != nullptr) && (getNeighborhoodMapObject(RIGHT) != nullptr)) {
+        return HORIZONTAL_UP;
+    }
+    if ((getNeighborhoodMapObject(UP) != nullptr) && (getNeighborhoodMapObject(DOWN) != nullptr) && (getNeighborhoodMapObject(LEFT) != nullptr)) {
+        return VERTICAL_LEFT;
+    }
+    if ((getNeighborhoodMapObject(UP) != nullptr) && (getNeighborhoodMapObject(DOWN) != nullptr) && (getNeighborhoodMapObject(RIGHT) != nullptr)) {
+        return VERTICAL_RIGHT;
+    }
+    if ((getNeighborhoodMapObject(DOWN) != nullptr) && (getNeighborhoodMapObject(LEFT) != nullptr) && (getNeighborhoodMapObject(RIGHT) != nullptr)) {
+        return HORIZONTAL_DOWN;
+    }
+    if ((getNeighborhoodMapObject(UP) != nullptr) && (getNeighborhoodMapObject(RIGHT) != nullptr)) {
+        return UP_RIGHT;
+    }
+    if ((getNeighborhoodMapObject(UP) != nullptr) && (getNeighborhoodMapObject(LEFT) != nullptr)) {
+        return UP_LEFT;
+    }
+    if ((getNeighborhoodMapObject(DOWN) != nullptr) && (getNeighborhoodMapObject(LEFT) != nullptr)) {
+        return DOWN_LEFT;
+    }
+    if ((getNeighborhoodMapObject(DOWN) != nullptr) && (getNeighborhoodMapObject(RIGHT) != nullptr)) {
+        return DOWN_RIGHT;
+    }
+    if ((getNeighborhoodMapObject(UP) != nullptr) || (getNeighborhoodMapObject(DOWN) != nullptr)) {
+        return VERTICAL;
+    }
+    if ((getNeighborhoodMapObject(LEFT) != nullptr) || (getNeighborhoodMapObject(RIGHT) != nullptr)) {
+        return HORIZONTAL;
+    }
+
+    return CROSS;
+}
