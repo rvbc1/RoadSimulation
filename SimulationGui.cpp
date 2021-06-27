@@ -130,16 +130,16 @@ void SimulationGui::drawMap(Map *map, QPainter &painter) {
                             painter.drawImage(rectangle, roadVerticalImage, sourceBig);
                             break;
                         case Road::UP_LEFT:
-                            painter.drawImage(rectangle, roadUpLeftImage, source);
+                            painter.drawImage(rectangle, roadUpLeftImage, sourceBig);
                             break;
                         case Road::UP_RIGHT:
-                            painter.drawImage(rectangle, roadUpRightImage, source);
+                            painter.drawImage(rectangle, roadUpRightImage, sourceBig);
                             break;
                         case Road::DOWN_LEFT:
-                            painter.drawImage(rectangle, roadDownLeftImage, source);
+                            painter.drawImage(rectangle, roadDownLeftImage, sourceBig);
                             break;
                         case Road::DOWN_RIGHT:
-                            painter.drawImage(rectangle, roadDownRightImage, source);
+                            painter.drawImage(rectangle, roadDownRightImage, sourceBig);
                             break;
                         case Road::CROSS:
                             painter.drawImage(rectangle, roadCrossImage, source);
