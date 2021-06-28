@@ -59,9 +59,9 @@ void Driver::process() {
     if (Road* road = dynamic_cast<Road*>(getMap()->getMapObject(vehicle->getCoordinates(), MapObject::ROAD))) {
         QVector<MapObject::Direction> directions = road->getAvailableDirections();
         directions.removeOne(MapObject::getOppositeDirection(direction));
-        if((directions.size() >= 2) || (directions.contains(direction) == false)){
+        if ((directions.size() >= 2) || (directions.contains(direction) == false)) {
             direction = directions[QRandomGenerator::global()->bounded(0, directions.size())];
-        } else{
+        } else {
             direction = directions[QRandomGenerator::global()->bounded(0, directions.size())];
         }
         // if(directions.empty() == false){
@@ -92,6 +92,10 @@ void Driver::process() {
     //         currentPath.pop_front();
     //     }
     // }
+}
+
+MapObject::Direction Driver::getDirection() {
+    return direction;
 }
 
 void Driver::addStop(QPoint coordinates) {

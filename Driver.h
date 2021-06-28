@@ -27,6 +27,8 @@ class Driver {
 
     void process();
 
+    MapObject::Direction getDirection();
+
     void addStop(QPoint coordinates);
 
     QVector<QPoint> getShortestPath(QPoint startPoint, QPoint endPoint);

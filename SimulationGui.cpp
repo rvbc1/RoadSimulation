@@ -8,6 +8,7 @@
 #include <QMouseEvent>
 #include <QPainter>
 
+QRectF sourceCar(0.0, 0.0, 400.0, 400.0);
 QRectF source(0.0, 0.0, 144.0, 144.0);
 QRectF sourceBig(0.0, 0.0, 168.0, 168.0);
 QImage roadVerticalLeftImage("sprites/vertical_left.png");
@@ -21,6 +22,10 @@ QImage roadUpRightImage("sprites/up_right.png");
 QImage roadDownLeftImage("sprites/down_left.png");
 QImage roadDownRightImage("sprites/down_right.png");
 QImage roadCrossImage("sprites/x.png");
+QImage carImageUp("sprites/car_up.png");
+QImage carImageRight("sprites/car_right.png");
+QImage carImageDown("sprites/car_down.png");
+QImage carImageLeft("sprites/car_left.png");
 
 SimulationGui::SimulationGui(SimulationManager *simulationManager) : QMainWindow() {
     this->simulationManager = simulationManager;
@@ -112,19 +117,19 @@ void SimulationGui::drawMap(Map *map, QPainter &painter) {
 
                     switch (road->getOrientation()) {
                         case Road::HORIZONTAL_UP:
-                            painter.drawImage(rectangle, roadHorizontalUpImage, source);
+                            painter.drawImage(rectangle, roadHorizontalUpImage, sourceBig);
                             break;
                         case Road::HORIZONTAL_DOWN:
-                            painter.drawImage(rectangle, roadHorizontalDownImage, source);
+                            painter.drawImage(rectangle, roadHorizontalDownImage, sourceBig);
                             break;
                         case Road::HORIZONTAL:
                             painter.drawImage(rectangle, roadHorizontalImage, sourceBig);
                             break;
                         case Road::VERTICAL_LEFT:
-                            painter.drawImage(rectangle, roadVerticalLeftImage, source);
+                            painter.drawImage(rectangle, roadVerticalLeftImage, sourceBig);
                             break;
                         case Road::VERTICAL_RIGHT:
-                            painter.drawImage(rectangle, roadVerticalRightImage, source);
+                            painter.drawImage(rectangle, roadVerticalRightImage, sourceBig);
                             break;
                         case Road::VERTICAL:
                             painter.drawImage(rectangle, roadVerticalImage, sourceBig);
@@ -142,16 +147,30 @@ void SimulationGui::drawMap(Map *map, QPainter &painter) {
                             painter.drawImage(rectangle, roadDownRightImage, sourceBig);
                             break;
                         case Road::CROSS:
-                            painter.drawImage(rectangle, roadCrossImage, source);
+                            painter.drawImage(rectangle, roadCrossImage, sourceBig);
                             break;
                     }
                     //painter.drawText(rectangle, Qt::AlignCenter, QString(road->getChar().c_str()));
                 } else if (Vehicle *vehicle = dynamic_cast<Vehicle *>(object)) {
-                    painter.setPen(Qt::red);
-                    painter.setFont(QFont("Arial", 60));
-
+                    //painter.setPen(Qt::red);
+                    //painter.setFont(QFont("Arial", 60));
                     QRect rectangle = QRect(w * areaSize, h * areaSize + offsetY, areaSize, areaSize);
-                    painter.drawText(rectangle, Qt::AlignCenter, QString(vehicle->getChar().c_str()));
+                    switch (vehicle->getDriver()->getDirection()) {
+                        case MapObject::DOWN:
+                            painter.drawImage(rectangle, carImageDown, sourceCar);
+                            break;
+                        case MapObject::LEFT:
+                            painter.drawImage(rectangle, carImageLeft, sourceCar);
+                            break;
+                        case MapObject::RIGHT:
+                            painter.drawImage(rectangle, carImageRight, sourceCar);
+                            break;
+                        case MapObject::UP:
+                            painter.drawImage(rectangle, carImageUp, sourceCar);
+                            break;
+                    }
+
+                    //painter.drawText(rectangle, Qt::AlignCenter, QString(vehicle->getChar().c_str()));
                 }
             }
         }
